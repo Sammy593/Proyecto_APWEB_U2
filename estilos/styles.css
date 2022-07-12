@@ -1,0 +1,63 @@
+body{
+    overflow-x: hidden;
+}
+
+.section1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: blue;
+    overflow-y: hidden;
+    box-sizing:content-box;
+    max-height: 300px;
+}
+
+.section1{
+    margin-left: -50%;
+    margin-right: -50%;
+}
+
+.globos_der,
+.globos_izq{
+    padding-top: 300px;
+}
+
+.globos_der:hover,
+.globos_izq:hover{
+    padding-top: 0px; 
+    transition: all 2s;
+}
+
+.section1:hover{
+    margin-left: 0%;
+    margin-right: 0%;
+    transition: all 2s;
+}
+.globos_izq{
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 300px;
+    height: 300px;
+}
+/*
+.blank_space_globos{
+    width: 300px;
+    background-color: aquamarine;
+}*/
+
+.globos_der{
+    background-color: yellow;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 300px;
+    height: 300px;
+}
+
+#globos3{
+    width: 150px;
+    height: 300px;
+}
+
