@@ -1,63 +1,94 @@
 body{
     overflow-x: hidden;
+    background-color: rgba(224, 255, 242, 0.377);
+    box-shadow: inset 20px 20px 10px rgba(249, 255, 213, 0.267),
+                inset -20px -20px 20px rgba(249, 255, 213, 0.267);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
-.section1{
+#section1{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: blue;
-    overflow-y: hidden;
+   /* background-color: blue;*/
+    overflow: hidden;
     box-sizing:content-box;
-    max-height: 300px;
+    height: 600px;
 }
 
-.section1{
-    margin-left: -50%;
-    margin-right: -50%;
+#section1{
+    margin-left: -40%;
+    margin-right: -40%;
 }
 
-.globos_der,
-.globos_izq{
-    padding-top: 300px;
+#globos_der,
+#globos_izq{
+    padding-top: 700px;
 }
 
-.globos_der:hover,
-.globos_izq:hover{
-    padding-top: 0px; 
-    transition: all 2s;
+#globos_izq{
+  /*  background-color: red;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; 
+    -webkit-animation: bounce-down 1.6s linear infinite;
+    animation: bounce-down 1.6s linear infinite;
 }
 
-.section1:hover{
-    margin-left: 0%;
-    margin-right: 0%;
-    transition: all 2s;
-}
-.globos_izq{
-    background-color: red;
+#globos_der{
+ /*   background-color: yellow;*/
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 300px;
-    height: 300px;
-}
-/*
-.blank_space_globos{
-    width: 300px;
-    background-color: aquamarine;
-}*/
-
-.globos_der{
-    background-color: yellow;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 300px;
-    height: 300px;
+    -webkit-animation: bounce-down 1.7s linear infinite;
+    animation: bounce-down 1.7s linear infinite;
 }
 
 #globos3{
-    width: 150px;
-    height: 300px;
+    width: 100px;
+    height: 250px;
 }
 
+#tres_estrellas{
+    display: flex;
+    position:absolute;
+    left: 28%;
+    padding: 30%;
+    justify-content: center;
+    align-items: center;
+    -webkit-animation: bounce-down 3.5s linear infinite;
+    animation: bounce-down 3.5s linear infinite;
+    z-index: 1;
+}
+#estrellas{
+    height: 0px;
+    width: 0px;
+    opacity: 100%;
+}
+
+/* animaciones */
+@-webkit-keyframes bounce-down {
+    25% {
+         -webkit-transform: translateY(-4px);
+    }
+    50%, 100% {
+         -webkit-transform: translateY(0);
+    }
+    75% {
+         -webkit-transform: translateY(4px);
+    }
+}
+
+@keyframes bounce-down {
+     25% {
+          transform: translateY(-4px);
+     }
+     50%, 100% {
+          transform: translateY(0);
+     }
+     75% {
+          transform: translateY(4px);
+     }
+}
