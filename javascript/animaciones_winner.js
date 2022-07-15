@@ -9,12 +9,18 @@ var estrellas_container = document.getElementById("tres_estrellas");
 var seccion_g = document.getElementById("section1");
 var seccion_g_d = document.getElementById("globos_down");
 
+var confetti = document.getElementById("back_confetti")
+
 function iniciar(){
+    confetti.style.filter = "opacity(50%)"
+    confetti.style.transition = 'all 3s';
     
     globos_d.style.paddingTop = '0px';
+  //  globos_d.style.transform = 'rotate(0deg)';
     globos_d.style.transition = 'all 2s';
 
     globos_i.style.paddingTop = '0px';
+   // globos_i.style.transform = 'rotate(0deg)';
     globos_i.style.transition = 'all 2s';
 
     globos_d_d.style.paddingTop = '0px';
@@ -29,10 +35,10 @@ function iniciar(){
 
     seccion_g_d.style.marginLeft = '0%';
     seccion_g_d.style.marginRight = '0%';
-    seccion_g_d.style.transition = 'all 2s';
+    seccion_g_d.style.transition = 'all 3s';
 
-    estrellas.style.width = '450px';
-    estrellas.style.height = '450px';
+    estrellas.style.width = '600px';
+    estrellas.style.height = '600px';
    
     estrellas.style.opacity = '100%';
     estrellas.style.transition = 'all 2s';
