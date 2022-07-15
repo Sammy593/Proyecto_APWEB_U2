@@ -1,13 +1,12 @@
 body{
     overflow-x: hidden;
-    background-color: rgba(224, 255, 242, 0.377);
+    background-color: rgba(151, 205, 250, 0.5);
     box-shadow: inset 20px 20px 10px rgba(249, 255, 213, 0.267),
                 inset -20px -20px 20px rgba(249, 255, 213, 0.267);
     margin: 0;
     padding: 0;
     height: 100vh;
 }
-
 #section1{
     display: flex;
     flex-direction: row;
@@ -54,18 +53,62 @@ body{
 #tres_estrellas{
     display: flex;
     position:absolute;
-    left: 28%;
-    padding: 30%;
+    left: 30%;
+    padding: 20%;
     justify-content: center;
     align-items: center;
     -webkit-animation: bounce-down 3.5s linear infinite;
     animation: bounce-down 3.5s linear infinite;
     z-index: 1;
+    width: 40%;
+    height: 60%;
 }
 #estrellas{
     height: 0px;
     width: 0px;
     opacity: 100%;
+}
+
+#globos_down{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   /* background-color: blue;*/
+    overflow: hidden;
+    box-sizing:content-box;
+    height: 600px;
+    padding: 1% 3%;
+    margin-top: -500px;
+}
+
+#globos_izq_d{
+    /*  background-color: red;*/
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap; 
+      -webkit-animation: bounce-down 1.6s linear infinite;
+      animation: bounce-down 1.6s linear infinite;
+      column-gap: 20px;
+  }
+  
+  #globos_der_d{
+   /*   background-color: yellow;*/
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      -webkit-animation: bounce-down 1.7s linear infinite;
+      animation: bounce-down 1.7s linear infinite;
+      column-gap: 20px;
+  }
+
+#globos_down{
+    margin-left: -40%;
+    margin-right: -40%;
+}
+
+#globos_der_d,
+#globos_izq_d{
+    padding-top: 700px;
 }
 
 /* animaciones */
