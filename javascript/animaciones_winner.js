@@ -9,7 +9,11 @@ var estrellas_container = document.getElementById("tres_estrellas");
 var seccion_g = document.getElementById("section1");
 var seccion_g_d = document.getElementById("globos_down");
 
-var confetti = document.getElementById("back_confetti")
+var confetti = document.getElementById("back_confetti");
+
+var felicitaciones = document.getElementById("felicitaciones");
+
+var confeti = document.getElementById("confeti");
 
 function iniciar(){
     confetti.style.filter = "opacity(50%)"
@@ -46,6 +50,12 @@ function iniciar(){
     estrellas_container.style.padding = '0';
     estrellas_container.style.transition = 'all 2s';
   //  estrellas_container.style.visibility = 'visible';
+
+    felicitaciones.style.fontSize = "140px";
+    felicitaciones.style.transition = 'all 1.5s';
+
+    confeti.style.marginTop = "-275px";
+    confeti.style.transition = 'all 4s';
     
 };
 
