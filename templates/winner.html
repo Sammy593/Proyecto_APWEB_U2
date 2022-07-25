@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block winner %}
+<head>  
+  <link rel="stylesheet" href="{{url_for('static', filename='estilos/styles.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='estilos/fondo.css')}}">
+
+  <link rel="stylesheet" href="./estilos/fondo.css"></head>
+<body onload="iniciar()">
+      <main>
+
+        <img src="https://acegif.com/wp-content/gif/confetti-31.gif" alt="" id="back_confetti">
+
+        <section id="section1"> <!-- Seccion contenedora para globos -->
+            <!-- Globos izquierda -->
+            <div id="globos_izq" >
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+
+            </div>
+            <!-- Estrellas -->
+            <div id="tres_estrellas">
+              <img id="estrellas" src="{{url_for('static', filename='images/estrellas.png')}}" alt="">
+            </div>
+
+            <!-- Globos derecha -->
+            <div id="globos_der">
+              <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+              <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+              <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+              <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+
+
+              </div>
+        </section>
+
+        <section id="globos_down">
+          <div id="globos_izq_d" >
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+                <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+        </div>
+
+        <!-- Globos derecha -->
+        <div id="globos_der_d">
+          <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+          <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+          <img id="globos3" src="{{url_for('static', filename='images/globo3.png')}}" alt="globos3">
+
+          </div>
+        </section>
+
+        <section id="letras_f">
+          <div id="felicitaciones">
+            <span>F</span><span>E</span><span>L</span><span>I</span><span>C</span><span>I</span><span>T</span><span>A</span><span>C</span><span>I</span><span>O</span><span>N</span><span>E</span><span>S</span>
+          </div>
+        </section>
+
+        <section id="confeti">
+          <img id="confeti_izq" src="{{url_for('static', filename='images/cono_confeti.png')}}" alt="">
+          <img id="confeti_der" src="{{url_for('static', filename='images/cono_confeti.png')}}" alt="">
+        </section>
+
+
+        <section class="fondo">
+          <div class="burbujas">
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+            <div class="burbuja"></div>
+        </div>
+        </section>
+      </main>
+</body>
+
+{% endblock %}
