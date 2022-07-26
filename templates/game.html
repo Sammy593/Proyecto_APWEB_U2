@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block game %}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/game_styles/game.css')}}">
+<section class="game_container">
+<img id="signo" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+    <img src="" alt="">
+    <div class="game_selection_container">
+        <div id="container_option_izq">
+            <img src="" alt="opcion 1">
+        </div>
+        <div id="container_option_der">
+            <img src="" alt="opcion 2">
+        </div>
+    </div>
+    
+    <div class="niño_container"></div>
+    <div class="niña_container"></div>
+
+</section>
+
+
+{% endblock %}

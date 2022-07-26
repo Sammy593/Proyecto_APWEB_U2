@@ -8,6 +8,11 @@ app = Flask(__name__, template_folder='templates')
 def index():
     return render_template('/principal.html')
 
+@app.route('/game')
+#contenedor para llamar a principal.html
+def game():
+    return render_template('/game.html')
+
 @app.route('/winner')
 #contenedor para llamar a principal.html
 def winner():
