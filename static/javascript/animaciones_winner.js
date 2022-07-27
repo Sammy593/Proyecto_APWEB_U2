@@ -51,6 +51,6 @@ function iniciar(){
     felicitaciones.style.fontSize = "140px";
     felicitaciones.style.transition = 'all 1.5s';
 
-    confeti.style.marginTop = "-190px";
+    confeti.style.marginTop = "-300px";
     confeti.style.transition = 'all 4s';
 };
