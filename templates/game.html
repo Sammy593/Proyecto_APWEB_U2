@@ -1,16 +1,39 @@
 {% extends "layout.html" %}
 {% block game %}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos_principal/principal.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/game_styles/game.css')}}">
 <section class="game_container">
-<img id="signo" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
-    <img src="" alt="">
-    <div class="game_selection_container">
-        <div id="container_option_izq">
-            <img src="" alt="opcion 1">
-        </div>
-        <div id="container_option_der">
-            <img src="" alt="opcion 2">
-        </div>
+  <div class="nube_container">
+    <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube3" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+</div>
+<img id="signo1" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+<img id="signo2" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+    
+<div class="game_selection_container">
+        <div class="deck">
+            <div class="card clickcard">
+              <div class="front face">
+               <img src="https://static.guiainfantil.com/media/26917/c/respetar-a-los-padres-poema-corto-para-ninos-de-las-faltas-de-respeto-md.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://static.guiainfantil.com/media/26917/c/respetar-a-los-padres-poema-corto-para-ninos-de-las-faltas-de-respeto-md.jpg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="deck">
+            <div class="card clickcard">
+              <div class="front face">
+                <img src="https://i.pinimg.com/564x/99/63/e3/9963e3ab6e12fb71bf683b0cac1f8c4e.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://i.pinimg.com/564x/99/63/e3/9963e3ab6e12fb71bf683b0cac1f8c4e.jpg" alt="">
+              </div>
+            </div>
+          </div>
     </div>
     
     <div class="niño_container"></div>
