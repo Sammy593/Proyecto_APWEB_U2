@@ -4,12 +4,19 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
-#contenedor para llamar a principal.html
 def index():
+    return render_template('/login/login.html')
+
+@app.route('/login_estudiante')
+def login_estudiante():
+    return render_template('/login/login_estudiante.html')
+
+
+@app.route('/principal')
+def principal():
     return render_template('/principal.html')
 
 @app.route('/game')
-#contenedor para llamar a principal.html
 def game():
     return render_template('/game.html')
 

@@ -1,20 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="nube_container">
-    <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
-    <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
-    <img class="nube" id="nube3" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
-    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
-</div>
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos_principal/principal.css')}}">
+<body onload="boton_aparecer()">
+    <div class="nube_container">
+        <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+        <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+        <img class="nube" id="nube3" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+        <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+        <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    </div>
+    
+    <section class="t_pickout">
+        <div class="t_p_container">
+            <span>Pick Out!</span>
+        </div>
+    </section>
+    <section class="goButton">
+        <div id="btn_Go">
+            <span id="text_btn_go">Go!</span>
+        </div>
+    </section>
+    <script src="{{url_for('static', filename='javascript/animaciones_principal.js')}}" type="text/javascript"></script>
+</body>
 
-<section class="t_pickout">
-    <div class="t_p_container">
-        <span>Pick Out!</span>
-    </div>
-</section>
-<section class="goButton">
-    <div id="btn_Go" onclick="window.location.href='./game'">
-        <span>Go!</span>
-    </div>
-</section>
 {% endblock %}

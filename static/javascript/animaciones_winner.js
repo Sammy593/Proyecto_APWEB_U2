@@ -20,11 +20,9 @@ function iniciar(){
     confetti.style.transition = 'all 3s';
     
     globos_d.style.paddingTop = '0px';
-  //  globos_d.style.transform = 'rotate(0deg)';
     globos_d.style.transition = 'all 2s';
 
     globos_i.style.paddingTop = '0px';
-   // globos_i.style.transform = 'rotate(0deg)';
     globos_i.style.transition = 'all 2s';
 
     globos_d_d.style.paddingTop = '0px';
@@ -49,26 +47,10 @@ function iniciar(){
 
     estrellas_container.style.padding = '0';
     estrellas_container.style.transition = 'all 2s';
-  //  estrellas_container.style.visibility = 'visible';
 
     felicitaciones.style.fontSize = "140px";
     felicitaciones.style.transition = 'all 1.5s';
 
     confeti.style.marginTop = "-190px";
     confeti.style.transition = 'all 4s';
-    
 };
-
-/*
-.globos_der:hover,
-.globos_izq:hover{
-    padding-top: 0px; 
-    transition: all 2s;
-}
-
-.section1:hover{
-    margin-left: 0%;
-    margin-right: 0%;
-    transition: all 2s;
-}
-*/

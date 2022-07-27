@@ -27,7 +27,7 @@ main{
     font-weight: 900;
     font-size: 100px;
     background-color: white;
-    width: 30%;
+    width: 35%;
     height: 40%;
     text-align: center;
     outline: 10px dashed #E0E4CC;
@@ -52,37 +52,33 @@ main{
 
 #btn_Go {
     display: flex;
-    width: 600px;
-    height: 200px;
-    background-color: rgb(2, 141, 255);
+    width: 0px;
+    height: 0px;
+    margin-top: 100px;
+    background-color: rgb(2, 255, 23);
 	padding:10px;
 	position:relative;
-	font-family: 'Open Sans', sans-serif;
-	font-size:12px;
 	text-decoration:none;
-	color:#fff;
-	background-image: linear-gradient(bottom, rgb(30, 102, 170) 0%, rgb(51, 207, 212) 100%);
-	box-shadow: inset 0px 1px 0px #7fb0f1, 0px 9px 0px #0d2f6f;
-    color: white;
+	color:rgb(0, 0, 0);
+	background-image: linear-gradient(bottom, rgb(30, 170, 60) 0%, rgb(102, 212, 51) 100%);
+	box-shadow: inset 0px 1px 0px #7ff19b, 0px 9px 0px #0d6f12;
     align-items: center;
     justify-content: center;
     border-radius: 80px 80px;
-    animation: a_boton 2s linear infinite;
     cursor:pointer;
 }
 
 #btn_Go:hover {
 	top:7px;
-	background-image: linear-gradient(bottom, rgb(30, 102, 170) 100%, rgb(51, 102, 212) 0%);
-	box-shadow: inset 0px 1px 0px #7fa3f1, inset 0px -1px 0px #0d0f6f;
-	/*color: #5ed9ff;*/
+	background-image: linear-gradient(bottom, rgb(53, 170, 30) 100%, rgb(51, 212, 78) 0%);
+	box-shadow: inset 0px 1px 0px #7ff1ab, inset 0px -1px 0px #0d6f49;
 	text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
-	background: rgb(44, 99, 202);
+	background: rgb(62, 202, 44);
+    color: white;
 }
 
 #btn_Go span{
-    font-size: 100px;
-    animation: a_Tgo 2s linear infinite;
+    font-size: 1px;
     font-family: 'Acme';
 }
 
@@ -97,7 +93,7 @@ main{
 .nube{
     width: 150px;
     height: 70px;
-    filter: opacity(40%);
+    filter: opacity(50%);
     animation: nubes_animation 4s linear infinite;
 }
 
@@ -138,12 +134,10 @@ main{
     }
 }
 
-
-
 /* Animacion de boton*/
 @keyframes a_boton{
     0%{
-
+        
     }
 
     50%{
