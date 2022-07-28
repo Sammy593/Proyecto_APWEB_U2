@@ -2,6 +2,7 @@
 {% block game %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos_principal/principal.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/game_styles/game.css')}}">
+<audio src="{{url_for('static', filename='audios/a_quienes_cosas_buenas.mp3')}}" autoplay></audio>
 <section class="game_container">
   <div class="nube_container">
     <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
@@ -14,7 +15,7 @@
 <img id="signo2" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
     
 <div class="game_selection_container">
-        <div class="deck">
+        <div class="deck" id="mal">
             <div class="card clickcard">
               <div class="front face">
                <img src="https://static.guiainfantil.com/media/26917/c/respetar-a-los-padres-poema-corto-para-ninos-de-las-faltas-de-respeto-md.jpg" alt="">
@@ -24,7 +25,7 @@
               </div>
             </div>
           </div>
-          <div class="deck">
+          <div class="deck" id="bien" onclick="window.location.href = '/winner'">
             <div class="card clickcard">
               <div class="front face">
                 <img src="https://img.freepik.com/vector-gratis/trabajador-social-ayudando-anciano-gris-pelo-mujer_3446-371.jpg?w=2000" alt="">
@@ -40,6 +41,16 @@
     <div class="niña_container"></div>
 
 </section>
+
+<script>
+  let boton = document.querySelector("#mal")
+
+  boton.addEventListener("click", () => {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
+    etiquetaAudio.play()
+  })
+</script>
 
 
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/estiloEntrenamiento/OneEntren.css')}}">
-<body onload="boton_aparecer()">
+<meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/game" />
+<body>
     <div class="nube_container">
         <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
         <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
@@ -15,24 +16,13 @@
             <span>Respeto</span> 
         </div>
     </section>
-    <section>
-       
-    </section>
     <section id="contenedor_video">
 
-        <video width="800" height="400" controls>
+        <video width="800" height="400" autoplay>
             <source src="/static/videos/Respeto.mp4" type="video/mp4">
         </video>
     </section>
-    <!--<section  class="goButton">
-        <div id="btn_Go">
-            <span id="text_btn_go">Go!</span>
-        </div>
-    </section>-->
-    <section id="Btn" >
-       <a href="/game"> <button  class="redondo">Prácticar</button></a>
-    </section>
-    
+
     <script src="{{url_for('static', filename='javascript/animaciones_principal.js')}}" type="text/javascript"></script>
 </body>
 
