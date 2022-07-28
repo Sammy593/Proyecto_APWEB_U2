@@ -16,6 +16,18 @@ def login_estudiante():
 def principal():
     return render_template('/principal.html')
 
+@app.route('/EntrenamientoUno')
+def EntrenamientoUno():
+    return render_template('/EntrenamientoUno.html') 
+
+@app.route('/EntrenamientoDos')
+def EntrenamientoDos():
+    return render_template('/EntrenamientoDos.html') 
+
+@app.route('/EntrenamientoTres')
+def EntrenamientoTres():
+    return render_template('/EntrenamientoTres.html') 
+
 @app.route('/game')
 def game():
     return render_template('/game.html')
