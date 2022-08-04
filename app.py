@@ -5,6 +5,10 @@ app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
 def index():
+    return render_template('/login/index.html')
+
+@app.route('/login')
+def login():
     return render_template('/login/login.html')
 
 @app.route('/login_estudiante')
