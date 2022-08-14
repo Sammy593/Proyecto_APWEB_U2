@@ -2,7 +2,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/estiloEntrenamiento/OneEntren.css')}}">
 <meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/game" />
-<body>
+<body onload="boton_aparecer()">
     <div class="nube_container">
         <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
         <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">

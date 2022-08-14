@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block winner %}
+<!--Este es para regresar de forma automatica al principal -->
+<meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/principal" />
 <head>  
   <link rel="stylesheet" href="{{url_for('static', filename='estilos/styles.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='estilos/fondo.css')}}">
@@ -78,7 +80,7 @@
         </div>
         </section>
       </main>
-
+       
       <script src="{{url_for('static', filename='javascript/animaciones_winner.js')}}" type="text/javascript"></script>
 </body>
 

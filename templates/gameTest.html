@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block game %}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos_principal/principal.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/game_styles/gameTest.css')}}">
+<audio src="{{url_for('static', filename='audios/test_Valores.mp3')}}" autoplay></audio>
+<section class="game_container">
+  <div class="nube_container">
+    <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube3" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+</div>
+<img id="signo1" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+<img id="signo2" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+    
+
+    <div>
+        <h1 id="Titulo_Test">Test de los Valores</h1>
+    </div>
+<div class="game_selection_container">
+        <div class="deck" id="mal">
+            <div class="card clickcard">
+              <div class="front face">
+               <img src="https://thumbs.dreamstime.com/z/ejemplo-del-seguro-de-coche-y-del-vector-del-hurto-64410321.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://thumbs.dreamstime.com/z/ejemplo-del-seguro-de-coche-y-del-vector-del-hurto-64410321.jpg" alt="">
+              </div>
+            </div>
+          </div>
+
+            <!--Card 1 bien-->
+            <div class="deck" id="bien" onclick="window.location.href = '/winner'">
+                <div class="card clickcard">
+                  <div class="front face">
+                    <img src="https://thumbs.dreamstime.com/z/ni%C3%B1o-lindo-con-capa-roja-protegiendo-su-familia-padres-felices-y-hijo-ilustrando-el-vector-muchacho-que-protege-ilustrado-184062221.jpg" alt="">
+                  </div>
+                  <div class="back face">
+                    <img src="https://thumbs.dreamstime.com/z/ni%C3%B1o-lindo-con-capa-roja-protegiendo-su-familia-padres-felices-y-hijo-ilustrando-el-vector-muchacho-que-protege-ilustrado-184062221.jpg" alt="">
+                  </div>
+                </div>
+              </div>
+
+          <!--Card 2-->
+          <div class="deck" id="malUno">
+            <div class="card clickcard">
+              <div class="front face">
+                <img
+                  src="https://static.guiainfantil.com/media/26917/c/respetar-a-los-padres-poema-corto-para-ninos-de-las-faltas-de-respeto-md.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="back face">
+                <img
+                  src="https://static.guiainfantil.com/media/26917/c/respetar-a-los-padres-poema-corto-para-ninos-de-las-faltas-de-respeto-md.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <!--Card 3 mal -->
+          <div class="deck" id="malDos">
+            <div class="card clickcard">
+              <div class="front face">
+               <img src="https://st4.depositphotos.com/4347477/41945/v/600/depositphotos_419452160-stock-illustration-conflict-of-interest-little-boy.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://st4.depositphotos.com/4347477/41945/v/600/depositphotos_419452160-stock-illustration-conflict-of-interest-little-boy.jpg" alt="">
+              </div>
+            </div>
+          </div>
+
+            <!--Card 2 bien-->
+            <div class="deck"  id="bien" onclick="window.location.href = '/winner'">
+                <div class="card clickcard">
+                  <div class="front face">
+                    <img
+                      src="https://img.freepik.com/vector-gratis/trabajador-social-ayudando-anciano-gris-pelo-mujer_3446-371.jpg?w=2000"
+                      alt=""
+                    />
+                  </div>
+                  <div class="back face">
+                    <img
+                      src="https://img.freepik.com/vector-gratis/trabajador-social-ayudando-anciano-gris-pelo-mujer_3446-371.jpg?w=2000"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+    </div>
+    
+    <div class="niño_container"></div>
+    <div class="niña_container"></div>
+</section>
+
+<script>
+  let boton = document.querySelector("#mal")
+
+  boton.addEventListener("click", () => {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
+    etiquetaAudio.play()
+  })
+
+  let botonUno = document.querySelector("#malUno")
+
+  botonUno.addEventListener("click", () => {
+    let etiquetaAudioUno = document.createElement("audio")
+    etiquetaAudioUno.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
+    etiquetaAudioUno.play()
+  })
+
+  let botonDos = document.querySelector("#malDos")
+
+  botonDos.addEventListener("click", () => {
+    let etiquetaAudioDos = document.createElement("audio")
+    etiquetaAudioDos.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
+    etiquetaAudioDos.play()
+  })
+</script>
+
+
+{% endblock %}

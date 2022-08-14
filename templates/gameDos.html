@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block game %}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos_principal/principal.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/game_styles/game.css')}}">
+<audio src="{{url_for('static', filename='audios/a_quienes_cosas_buenas.mp3')}}" autoplay></audio>
+<section class="game_container">
+  <div class="nube_container">
+    <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube2" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube3" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+    <img class="nube" id="nube4" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">
+</div>
+<img id="signo1" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+<img id="signo2" src="{{url_for('static', filename='images/game/signo_interrogacion.png')}}" alt="">
+    
+<div class="game_selection_container">
+        <div class="deck" id="mal">
+            <div class="card clickcard">
+              <div class="front face">
+               <img src="https://thumbs.dreamstime.com/z/ejemplo-del-seguro-de-coche-y-del-vector-del-hurto-64410321.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://thumbs.dreamstime.com/z/ejemplo-del-seguro-de-coche-y-del-vector-del-hurto-64410321.jpg" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="deck" id="bien" onclick="window.location.href = '/EntrenamientoTres'">
+            <div class="card clickcard">
+              <div class="front face">
+                <img src="https://thumbs.dreamstime.com/z/ni%C3%B1o-lindo-con-capa-roja-protegiendo-su-familia-padres-felices-y-hijo-ilustrando-el-vector-muchacho-que-protege-ilustrado-184062221.jpg" alt="">
+              </div>
+              <div class="back face">
+                <img src="https://thumbs.dreamstime.com/z/ni%C3%B1o-lindo-con-capa-roja-protegiendo-su-familia-padres-felices-y-hijo-ilustrando-el-vector-muchacho-que-protege-ilustrado-184062221.jpg" alt="">
+              </div>
+            </div>
+          </div>
+    </div>
+    
+    <div class="niño_container"></div>
+    <div class="niña_container"></div>
+
+</section>
+
+<script>
+  let boton = document.querySelector("#mal")
+
+  boton.addEventListener("click", () => {
+    let etiquetaAudio = document.createElement("audio")
+    etiquetaAudio.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
+    etiquetaAudio.play()
+  })
+</script>
+
+
+{% endblock %}

@@ -162,3 +162,43 @@ main{
         font-size: 100px;
     }
 }
+
+
+#Titulo_Test{
+    margin: auto;
+    margin-bottom: 10%;
+    font-family: 'Acme', sans-serif;
+    font-weight: 45px;
+    font-size: 60px;
+    background-color: white;
+    width: 40%;
+    height: 30%;
+    text-align: center;
+    outline: 10px dashed #E0E4CC;
+    box-shadow: 0 0 0 10px #69D2E7;
+    animation: 1s animateBorderOne ease infinite;
+}
+
+
+a:link, a:visited {
+    background-color: white;
+    color: black;
+    border: 2px solid green;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+    background-color: green;
+    color: white;
+  }
+  .btnRetur{
+    display: flex;
+    position: absolute;
+    width: 15%;
+    height: 8%;
+  }
+
+
