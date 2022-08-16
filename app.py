@@ -26,7 +26,7 @@ def autenticar():
         if id_usuario != False:
             params = {"id_usuario": id_usuario}
             print(params)
-            return redirect(url_for('administracion'))
+            return redirect(url_for("administracion", id_usuario=id_usuario))
         else:
             return redirect(url_for('index'))
     else:
@@ -40,9 +40,9 @@ def login_estudiante():
 
 
 #Portal de administracion
-@app.route('/administracion', methods=["GET"])
-def administracion(): 
-    return render_template('/administracion/adm/administracion.html')
+@app.route('/administracion/<id_usuario>', methods=["GET", "POST"])
+def administracion(id_usuario): 
+    return render_template('/administracion/adm/administracion.html'.format(id_usuario))
 
 '''
  ##############################################################################
