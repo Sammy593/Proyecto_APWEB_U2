@@ -1,15 +1,9 @@
 #importacion de librerias
-from flask import Flask, render_template, request, redirect, url_for
-import pymongo
-
-#Conexion con MongoDB
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["PickOut"]
-
-print(myclient)
-
+from flask import Flask, render_template, request, redirect, url_for,jsonify
+import validar_bdd as validar
 app = Flask(__name__, template_folder='templates')
 
+import forms
 
 '''
  ##############################################################################
@@ -20,21 +14,35 @@ app = Flask(__name__, template_folder='templates')
 def index():
     return render_template('/administracion/index.html')
 
-#Este es el Login 
-@app.route('/login')
-def login():
-    return render_template('/administracion/login.html')
+#Autenticacion de usuario
+@app.route("/autenticar", methods=["GET","POST"])
+def autenticar():
+    comment_form = forms.CommentForm(request.form)
+    if request.method == 'POST' and comment_form.validate():
+        user = request.form["user"]
+        passwd = request.form["passwd"]
+        id_usuario = validar.encontrar_usuario(user, passwd)
+        print(type(id_usuario))
+        if id_usuario != False:
+            params = {"id_usuario": id_usuario}
+            print(params)
+            return redirect(url_for('administracion'))
+        else:
+            return redirect(url_for('index'))
+    else:
+      return render_template('/administracion/index.html')
+
 
 #Este es el login de estudiante
 @app.route('/login_estudiante')
 def login_estudiante(): 
     return render_template('/administracion/login_estudiante.html')
 
-#Portal de administrador
-@app.route('/administrador')
-def administrador(): 
-    return render_template('/administracion/adm/administrador.html')
 
+#Portal de administracion
+@app.route('/administracion', methods=["GET"])
+def administracion(): 
+    return render_template('/administracion/adm/administracion.html')
 
 '''
  ##############################################################################
