@@ -44,6 +44,9 @@ def login_estudiante():
 def administracion(id_usuario): 
     return render_template('/administracion/adm/administracion.html'.format(id_usuario))
 
+@app.route('/ver_adm')
+def ver_adm(): 
+    return render_template('/administracion/adm/ver_adm.html')
 '''
  ##############################################################################
         Rutas para el juego
