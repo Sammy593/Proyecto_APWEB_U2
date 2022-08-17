@@ -1,9 +1,9 @@
 #importacion de librerias
-from flask import Flask, render_template, request, redirect, url_for,jsonify
+from flask import Flask, render_template, request, redirect, url_for,jsonify, flash
 import validar_bdd as validar
-app = Flask(__name__, template_folder='templates')
+#import forms
 
-import forms
+app = Flask(__name__, template_folder='templates')
 
 '''
  ##############################################################################
@@ -17,8 +17,8 @@ def index():
 #Autenticacion de usuario
 @app.route("/autenticar", methods=["GET","POST"])
 def autenticar():
-    comment_form = forms.CommentForm(request.form)
-    if request.method == 'POST' and comment_form.validate():
+    #comment_form = forms.CommentForm(request.form)
+    if request.method == 'POST':
         user = request.form["user"]
         passwd = request.form["passwd"]
         id_usuario = validar.encontrar_usuario(user, passwd)
@@ -28,6 +28,7 @@ def autenticar():
             print(params)
             return redirect(url_for("administracion", id_usuario=id_usuario))
         else:
+            flash("Datos incorrectos o usuario no existe")
             return redirect(url_for('index'))
     else:
       return render_template('/administracion/index.html')
@@ -103,4 +104,5 @@ def winner():
 
  #  Iniciando la aplicaciones
 if __name__ == "__main__":
+    app.secret_key = 'secret'
     app.run(debug=True)

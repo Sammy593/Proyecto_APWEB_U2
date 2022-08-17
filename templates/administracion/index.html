@@ -9,11 +9,19 @@
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form action="/autenticar"  method="post">
+          <form id="form" action="/autenticar"  method="post">
             <p class="lead fw-normal mb-0 me-3">Iniciar sesion</p> 
             <div class="divider d-flex align-items-center my-4">
             </div>
-  
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                {{ message }}
+              {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="user">Usuario</label>
@@ -65,6 +73,8 @@
     </div>
   </section>
   <script src="{{url_for('static', filename='src_admin/js/jquery-3.3.1.min.js')}}"></script>
-  <script src="{{url_for('static', filename='src_admin/js/login.js')}}"></script>
+  <!--Incluir el plugin jQuery Validate-->
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
+  <script src="{{url_for('static', filename='src_admin/js/form.js')}}"></script>
 {% endblock %}
