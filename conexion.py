@@ -1,8 +1,22 @@
 import pymongo
+from mongoengine import Document, StringField, connect
 
-#Conexion con MongoDB
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["PickOut"]
+try:
+     MONGOHOST = "localhost"
+     MONGOPORT = "27017"
+     MONGO_TIEMPO_FUERA = 1000
 
-usuarios = mydb["usuarios"]
-roles = mydb["roles"]
+     MONGO_URI = "mongodb://" + MONGOHOST + ":" + MONGOPORT + "/"
+
+     MONGO_BASEDATOS = "PickOut"
+     #conexion con pymongo
+     client = pymongo.MongoClient(MONGO_URI,serverSelectionTimeoutMS=MONGO_TIEMPO_FUERA)
+     baseDatos = client[MONGO_BASEDATOS]
+     
+     #conexion con mongoengine
+     x = connect(MONGO_BASEDATOS)
+     
+     print(client)
+     print(x)
+except:
+     print("Conexion fallida")

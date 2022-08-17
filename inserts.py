@@ -1,5 +1,7 @@
 import conexion
 
+#Clases de elementos 
+
 def usuario(pusuario_id, pnombre, papellido, pusuario, pclave, prol_id, pestado):
      data_usuario = {"usuario_id": pusuario_id,
                      "nombre": pnombre,

@@ -1,9 +1,16 @@
 #importacion de librerias
 from flask import Flask, render_template, request, redirect, url_for,jsonify, flash
+#validacion de inicio de sesion
+from flask_login import LoginManager,login_user,logout_user,login_required,current_user
+#Buscar datos en la base de datos mongodb
 import validar_bdd as validar
-#import forms
 
 app = Flask(__name__, template_folder='templates')
+
+#gestion de inicio de sesion
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 '''
  ##############################################################################
@@ -17,7 +24,6 @@ def index():
 #Autenticacion de usuario
 @app.route("/autenticar", methods=["GET","POST"])
 def autenticar():
-    #comment_form = forms.CommentForm(request.form)
     if request.method == 'POST':
         user = request.form["user"]
         passwd = request.form["passwd"]
@@ -33,12 +39,10 @@ def autenticar():
     else:
       return render_template('/administracion/index.html')
 
-
 #Este es el login de estudiante
 @app.route('/login_estudiante')
 def login_estudiante(): 
     return render_template('/administracion/login_estudiante.html')
-
 
 #Portal de administracion
 @app.route('/administracion/<id_usuario>', methods=["GET", "POST"])
