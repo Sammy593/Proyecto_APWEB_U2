@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for,jsonify, fl
 #validacion de inicio de sesion
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 #Buscar datos en la base de datos mongodb
-import validar_bdd as validar
+import query as validar
 
 app = Flask(__name__, template_folder='templates')
 
