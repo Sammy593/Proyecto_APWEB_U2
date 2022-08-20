@@ -1,12 +1,12 @@
 #importacion de librerias
-from flask import Flask, render_template, request, redirect, url_for,jsonify, flash
+from os import abort
+from inicializacion import app as app
+import models as model
+from flask import render_template, request, redirect, url_for,jsonify, flash, session
 #validacion de inicio de sesion
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 #Buscar datos en la base de datos mongodb
-import query as validar
-
-app = Flask(__name__, template_folder='templates')
-
+import consultas as validar
 #gestion de inicio de sesion
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -16,9 +16,11 @@ login_manager.login_view = "login"
  ##############################################################################
           Rutas de login y gestion
 '''
-#aplicacion principal
+#aplicacion principal - login
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for("administracion"))
     return render_template('/administracion/index.html')
 
 #Autenticacion de usuario
@@ -27,33 +29,59 @@ def autenticar():
     if request.method == 'POST':
         user = request.form["user"]
         passwd = request.form["passwd"]
-        id_usuario = validar.encontrar_usuario(user, passwd)
-        print(type(id_usuario))
-        if id_usuario != False:
-            params = {"id_usuario": id_usuario}
-            print(params)
-            return redirect(url_for("administracion", id_usuario=id_usuario))
+        usuario = validar.encontrar_usuario(user, passwd)
+        if usuario != False:
+            login_user(usuario)
+            return redirect(url_for("administracion"))
         else:
             flash("Datos incorrectos o usuario no existe")
             return redirect(url_for('index'))
     else:
       return render_template('/administracion/index.html')
 
+permisosList = []
+#Portal de administracion
+@app.route('/administracion/', methods=["GET", "POST"])
+def administracion(): 
+    if current_user.is_authenticated:
+        id = current_user.get_id()
+        permisos = validar.get_permisos(id)
+        for i in permisos:
+            permisosList.append(i)
+        
+        return render_template('/administracion/adm/administracion.html', permisos = permisosList)
+    return redirect(url_for('index'))
+
+@app.route('/ver_adm')
+def ver_adm(): 
+    return render_template('/administracion/adm/ver_adm.html')
+
+
+
+''' Control de rutas para interfaz de administracion'''
+#Ruta para 
+@app.route('/agregar_adm', methods=["get","post"])
+@login_required
+def agregar_adm():
+	if not current_user.is_admin():
+		abort(404)
+     
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    permisosList.clear()
+    return redirect(url_for('index'))
+
+
+
 #Este es el login de estudiante
 @app.route('/login_estudiante')
 def login_estudiante(): 
     return render_template('/administracion/login_estudiante.html')
 
-#Portal de administracion
-@app.route('/administracion/<id_usuario>', methods=["GET", "POST"])
-def administracion(id_usuario): 
-    return render_template('/administracion/adm/administracion.html'.format(id_usuario))
-
-@app.route('/ver_adm')
-def ver_adm(): 
-    return render_template('/administracion/adm/ver_adm.html')
 '''
- ##############################################################################
+ ####################################################
         Rutas para el juego
 '''
 #Este es la interfaz prinicipal del juego 
@@ -105,6 +133,11 @@ def winner():
 '''
  ##############################################################################
 '''
+#Llamando al cargador de User
+@login_manager.user_loader
+def load_user(user_id):
+	return model.usuarios.objects.get(usuario_id=user_id)
+
 
  #  Iniciando la aplicaciones
 if __name__ == "__main__":
