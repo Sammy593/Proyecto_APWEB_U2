@@ -3,7 +3,7 @@ from flask_mongoengine import MongoEngine
 
 try:
      app = Flask(__name__, template_folder='templates')
-     app.config["MONGODB_SETTINGS"] = [
+     app.config["MONGODB_SETTINGS"] =[
      {
      "db": "PickOut",
      "host": "localhost",
