@@ -49,13 +49,16 @@ def administracion():
         for i in permisos:
             permisosList.append(i)
         
-        return render_template('/administracion/adm/administracion.html', permisos = permisosList)
+        return render_template('/administracion.html', permisos = permisosList)
     return redirect(url_for('index'))
 
 @app.route('/ver_adm')
 def ver_adm(): 
-    return render_template('/administracion/adm/ver_adm.html')
+    return render_template('/administracion/adm/ver_adm.html', permisos = permisosList)
 
+@app.route("/ver_estudiantes")
+def ver_estudiantes(): 
+    return render_template('/administracion/adm/ver_est.html', permisos = permisosList)
 
 
 ''' Control de rutas para interfaz de administracion'''

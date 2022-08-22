@@ -27,15 +27,23 @@ def get_permisos(usr_id):
      permisos = []
      for m in roles:
           for n in model.roles.objects(nombre_rol=m):
-               for o in range(len(n.permiso_nombre)):
-                    permisos.append(n.permiso_nombre[o])
+               for o in range(len(n.permiso_id)):
+                    permisos.append(n.permiso_id[o])
      return permisos
 
-"""y = encontrar_usuario("docente", "docente")
-print(y)
-x = get_permisos(y["usuario_id"])
-print(x)"""
+def get_lista_alumnos(pUsuario_id, pPeriodo ):
+     listaEstudiantes = []
+     try:
+          usuario = model.usuarios.objects.get(usuario_id = pUsuario_id)
+          maestro = usuario["usuario_id"]
+          
+          paralelo = model.paralelos.objects.get(maestro_id = maestro)
+          
+          periodo = model.periodos.objects.get(periodo_id)
+          return paralelo["nombre_paralelo"]
+     except:
+          return False
 
-
-     
-#eliminar_usuario_id("1")
+x = get_lista_alumnos("1", "2022")
+print(x)
+print(type(x))

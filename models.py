@@ -14,7 +14,7 @@ try:
      class roles(db.Document):
           rol_id = db.StringField(required=True, unique=True)
           nombre_rol = db.StringField(required=True)
-          permiso_nombre = db.ListField(required=True)
+          permiso_id = db.ListField(required=True)
      #coleccion usuarios (incluye maestros)
      class usuarios(db.Document):
           usuario_id = db.StringField(required=True, unique=True)
@@ -55,19 +55,19 @@ try:
      #coleccion paralelos
      class paralelos(db.Document):
           paralelo_id = db.StringField(required=True, unique=True)
-          maestro_id = db.ReferenceField(usuarios) #referencia a un maestro registrado en la coleccion de usuarios
+          maestro_id = db.StringField(required=True) #referencia a un maestro registrado en la coleccion de usuarios
           nombre_paralelo = db.StringField(Required=True)
           estado = db.BooleanField(required=True)
      #coleccion reglas
      class reglas(db.Document):
           regla_id = db.StringField(required=True, unique=True)
-          regla = db.IntField(Required=True)
+          regla = db.StringField(Required=True) #base sobre calificacion de actividades en periodo lectivo
           estado = db.BooleanField(required=True)
      #coleccion periodos
      class periodos(db.Document):
           periodo_id = db.StringField(required=True, unique=True)
           regla_id = db.StringField(required=True)
-          anio = db.IntField(Required=True)
+          anio = db.StringField(Required=True)
           estado = db.BooleanField(required=True)
      #coleccion alumnos
      class alumnos(db.Document):
@@ -97,8 +97,6 @@ try:
           alumno_id = db.StringField(required=True)
           actividad_id = db.StringField(required=True)
           valor_nota = db.FloatField(required=True)
-     
-     print("Todo correcto")
 except IOError:
      print(IOError)
      
