@@ -150,7 +150,7 @@ periodo2 = modelo.periodos(
 )
 periodo1.save()
 periodo2.save()
-
+"""
 #agregar alumnos
 alumno1 = modelo.alumnos(
      alumno_id = "1",
@@ -192,7 +192,7 @@ alumno4 = modelo.alumnos(
 alumno1.save()
 alumno2.save()
 alumno3.save()
-alumno4.save()"""
+alumno4.save()
 
 """#agregar paralelos
 paralelo1 = modelo.paralelos(

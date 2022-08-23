@@ -2,11 +2,11 @@
 from os import abort
 from inicializacion import app as app
 import models as model
-from flask import render_template, request, redirect, url_for,jsonify, flash, session
+from flask import render_template, request, redirect, url_for, flash
 #validacion de inicio de sesion
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 #Buscar datos en la base de datos mongodb
-import consultas as validar
+import consultas as consultas
 #gestion de inicio de sesion
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -29,7 +29,7 @@ def autenticar():
     if request.method == 'POST':
         user = request.form["user"]
         passwd = request.form["passwd"]
-        usuario = validar.encontrar_usuario(user, passwd)
+        usuario = consultas.encontrar_usuario(user, passwd)
         if usuario != False:
             login_user(usuario)
             return redirect(url_for("administracion"))
@@ -38,29 +38,62 @@ def autenticar():
             return redirect(url_for('index'))
     else:
       return render_template('/administracion/index.html')
-
+  
+paralelos = consultas.get_paralelos()
 permisosList = []
 #Portal de administracion
-@app.route('/administracion/', methods=["GET", "POST"])
+@app.route('/administracion/')
 def administracion(): 
     if current_user.is_authenticated:
         id = current_user.get_id()
-        permisos = validar.get_permisos(id)
+        permisos = consultas.get_permisos(id)
         for i in permisos:
             permisosList.append(i)
-        
-        return render_template('/administracion.html', permisos = permisosList)
+        return render_template('/administracion.html', permisos = permisosList, paralelos = paralelos)
     return redirect(url_for('index'))
 
 @app.route('/ver_adm')
 def ver_adm(): 
     return render_template('/administracion/adm/ver_adm.html', permisos = permisosList)
 
+periodosList = consultas.get_periodos()
 @app.route("/ver_estudiantes")
 def ver_estudiantes(): 
-    return render_template('/administracion/adm/ver_est.html', permisos = permisosList)
+     if current_user.is_authenticated:
+         return render_template('/administracion/adm/ver_est.html', permisos = permisosList, periodosList = periodosList, paralelos = paralelos)
+     return redirect(url_for('index'))
 
+@app.route("/lista_estudiantes", methods=["GET", "POST"])
+def lista_estudiantes():
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            id = current_user.get_id()
+            periodo_anio = request.form["periodo"]
+            lista_estudiantes = consultas.get_lista_alumnos(id, periodo_anio)
+            return render_template('/administracion/adm/ver_est.html',paralelos = paralelos, permisos = permisosList, periodosList = periodosList, lista_estudiantes= lista_estudiantes)
+    return redirect(url_for('index'))    
+    
+#editar alumno
+@app.route('/edit/<id>', methods = ['POST', 'GET'])
+def edit(id):
+    estudiante = consultas.encontrar_alumno(id)
+    periodoActivo = consultas.get_periodo_activo()
+    periodo = periodoActivo['anio']
+    return render_template('/administracion/adm/edit_alumno.html',periodo = periodo, permisos = permisosList, estudiante = estudiante, periodosList = periodosList, paralelos = paralelos)
+#update
+@app.route('/update/<id>', methods=['POST'])
+def update_contact(id):
+    if request.method == 'POST':
+        cedula = request.form["cedula"]
+        nombre = request.form["nombre"]
+        apellido = request.form["apellido"]
+        paralelo = request.form["paralelo"]
+        periodo = request.form["periodo"]
+        estado = request.form["estado"]
+        
+        consultas.editar_alumno(id, cedula, nombre, apellido, paralelo, periodo, estado)
 
+        return redirect(url_for("ver_estudiantes",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
 ''' Control de rutas para interfaz de administracion'''
 #Ruta para 
 @app.route('/agregar_adm', methods=["get","post"])

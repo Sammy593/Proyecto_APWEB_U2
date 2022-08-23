@@ -291,17 +291,24 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Administrar</a></li>
+          {% for paralelo in paralelos %}
+            {% if paralelo['maestro_id'] == current_user.get_id() %}
+               <li class="breadcrumb-item"><a href="#">Paralelo: {{paralelo['nombre_paralelo']}}</a></li>
+            {%endif%}
+          {%endfor%}
         </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <div class="tile-body">Datos aqui</div>
+            <!--<div class="tile-body">Datos aqui</div>-->
             {% block ver_adm %} 
             {% endblock %}
             <!-- Ver estudiantes -->
             {% block ver_est %} 
+            {% endblock %}
+            <!-- Editar alumnos -->
+            {% block edit_alum %}
             {% endblock %}
           </div>
         </div>
