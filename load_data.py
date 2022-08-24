@@ -124,12 +124,12 @@ rol2.save()
 regla1 = modelo.reglas(
      regla_id = "1",
      regla = "10" ,
-     estado = True
+     estado = False
 )
 regla2 = modelo.reglas(
      regla_id = "2",
      regla = "20" ,
-     estado = False
+     estado = True
 )
 
 regla1.save()
@@ -176,7 +176,7 @@ alumno3 = modelo.alumnos(
      cedula = "7893391123",
      nombre = "Alan",
      apellido = "Brito",
-     paralelo_id = "1",
+     paralelo_id = "2",
      periodo_id = "2",
      estado = True
 )
@@ -215,3 +215,51 @@ paralelo2.save()
 
 
 #Agregar materias
+materia1 = modelo.materias(
+     materia_id = "1",
+     nombre_materia = "Comprensión y expresión del lenguaje",
+     estado = True
+)
+materia2 = modelo.materias(
+     materia_id = "2",
+     nombre_materia = "Convivencia",
+     estado = True
+)
+
+materia1.save()
+materia2.save()
+
+actividad1 = modelo.actividades(
+     actividad_id = "1",
+     materia_id = "1",
+     periodo_id = "2",
+     nombre_actividad = "Juego de valores 1",
+     estado = False
+)
+
+actividad2 = modelo.actividades(
+     actividad_id = "2",
+     materia_id = "2",
+     periodo_id = "2",
+     nombre_actividad = "Juego de valores 2",
+     estado = True
+)
+
+actividad1.save()
+actividad2.save()
+
+nota1 = modelo.notas(
+     nota_id = "1",
+     alumno_id = "3",
+     actividad_id = "1",
+     valor_nota = 16.40
+)
+nota2 = modelo.notas(
+     nota_id = "2",
+     alumno_id = "4",
+     actividad_id = "1",
+     valor_nota = 17.55
+)
+
+nota1.save()
+nota2.save()
