@@ -201,7 +201,7 @@
           <ul class="treeview-menu">
             {% if '3' in permisos%}
             <li>
-              <a class="treeview-item" href="components.html"
+              <a class="treeview-item" href="{{url_for('adm_agregar_estudiante')}}"
                 ><i class="icon fa fa-circle-o"></i> Agregar estudiante</a
               >
             </li>
@@ -291,11 +291,15 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          {% for paralelo in paralelos %}
-            {% if paralelo['maestro_id'] == current_user.get_id() %}
-               <li class="breadcrumb-item"><a href="#">Paralelo: {{paralelo['nombre_paralelo']}}</a></li>
-            {%endif%}
-          {%endfor%}
+          {% if current_user.is_admin() %}
+             <li class="breadcrumb-item"><a href="#">Todos los paralelos</a></li> 
+          {% else %}
+            {% for paralelo in paralelos %}     
+              {% if paralelo['maestro_id'] == current_user.get_id() %}
+                <li class="breadcrumb-item"><a href="#">Paralelo: {{paralelo['nombre_paralelo']}}</a></li>
+              {%endif%}
+            {%endfor%}
+          {%endif%}
         </ul>
       </div>
       <div class="row">
@@ -309,6 +313,9 @@
             {% endblock %}
             <!-- Editar alumnos -->
             {% block edit_alum %}
+            {% endblock %}
+            <!-- Agregar alumno -->
+            {% block add_alum %}
             {% endblock %}
           </div>
         </div>

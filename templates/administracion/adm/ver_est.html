@@ -24,6 +24,7 @@
               <td>Cedula</td>
               <td>Nombre</td>
               <td>Apellido</td>
+              <td>Paralelo</td>
             </tr>
           </thead>
           <tbody>
@@ -33,11 +34,18 @@
               <td>{{estudiante.cedula}}</td>
               <td>{{estudiante.nombre}}</td>
               <td>{{estudiante.apellido}}</td>
+              {%for paralelo in paralelos%}
+                {%if paralelo['paralelo_id'] == estudiante['paralelo_id']%}
+                  <td>{{paralelo.nombre_paralelo}}</td>
+                {%endif%}
+              {% endfor %}
+              {% if current_user.is_admin() or '3' in permisos %}
               <td>
                 <a href="/edit/{{estudiante.alumno_id}}" class="btn btn-secondary">Editar<img style="margin-left:10px;" width="15px" height="15px" src="{{url_for('static', filename='images/icon-edit.png')}}" alt=""></a>
                 <a href="/delete/{{estudiante.alumno_id}}" class="btn btn-danger btn-delete">Eliminar<img style="margin-left:10px;" width="15px" height="15px" src="{{url_for('static', filename='images/icon-trash.png')}}" alt="x"></a>
               </td>
             </tr>
+             {%endif%}
             {% endfor %}
           </tbody>
         </table>

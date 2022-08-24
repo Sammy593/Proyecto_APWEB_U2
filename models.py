@@ -52,6 +52,15 @@ try:
           
           def get_id(self):
                return str(self.usuario_id)
+          def is_admin(self):
+               roles = []
+               for i in usuarios.objects(usuario_id=self.usuario_id):
+                    for o in range(len(i.rol_id)):
+                         roles.append(i.rol_id[o])         
+               if 'administrador' in roles:
+                    return True
+               else:
+                    return False
      #coleccion paralelos
      class paralelos(db.Document):
           paralelo_id = db.StringField(required=True, unique=True)
@@ -85,7 +94,7 @@ try:
           estado = db.BooleanField(required=True)
      #coleccion actividades
      class actividades(db.Document):
-          actididad_id = db.StringField(required=True, unique=True)
+          actividad_id = db.StringField(required=True, unique=True)
           materia_id = db.StringField(required=True)
           periodo_id = db.StringField(required=True)
           nombre_actividad = db.StringField(required=True)

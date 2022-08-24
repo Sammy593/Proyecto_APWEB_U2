@@ -1,6 +1,6 @@
 import models as modelo
 
-"""usuario1 = modelo.usuarios(
+usuario1 = modelo.usuarios(
      usuario_id = "1",
      nombre = "Samuel",
      apellido = "Ledesma",
@@ -150,7 +150,7 @@ periodo2 = modelo.periodos(
 )
 periodo1.save()
 periodo2.save()
-"""
+
 #agregar alumnos
 alumno1 = modelo.alumnos(
      alumno_id = "1",
@@ -194,7 +194,7 @@ alumno2.save()
 alumno3.save()
 alumno4.save()
 
-"""#agregar paralelos
+#agregar paralelos
 paralelo1 = modelo.paralelos(
      paralelo_id = "1",
      maestro_id = "1",
@@ -208,7 +208,7 @@ paralelo2 = modelo.paralelos(
      estado = True
 )
 paralelo1.save()
-paralelo2.save()"""
+paralelo2.save()
 #agregar actividades
 
 #Agregar notas

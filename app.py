@@ -16,6 +16,12 @@ login_manager.login_view = "login"
  ##############################################################################
           Rutas de login y gestion
 '''
+paralelos = consultas.get_paralelos()
+permisosList = []
+periodosList = consultas.get_periodos()
+
+periodo = consultas.get_periodo_activo()
+periodoActivo = periodo['anio']
 #aplicacion principal - login
 @app.route('/')
 def index():
@@ -39,8 +45,6 @@ def autenticar():
     else:
       return render_template('/administracion/index.html')
   
-paralelos = consultas.get_paralelos()
-permisosList = []
 #Portal de administracion
 @app.route('/administracion/')
 def administracion(): 
@@ -56,7 +60,7 @@ def administracion():
 def ver_adm(): 
     return render_template('/administracion/adm/ver_adm.html', permisos = permisosList)
 
-periodosList = consultas.get_periodos()
+"""Administrar alumnos"""
 @app.route("/ver_estudiantes")
 def ver_estudiantes(): 
      if current_user.is_authenticated:
@@ -72,17 +76,37 @@ def lista_estudiantes():
             lista_estudiantes = consultas.get_lista_alumnos(id, periodo_anio)
             return render_template('/administracion/adm/ver_est.html',paralelos = paralelos, permisos = permisosList, periodosList = periodosList, lista_estudiantes= lista_estudiantes)
     return redirect(url_for('index'))    
-    
+#agregar alumno
+@app.route('/adm_agregar_estudiante')
+def adm_agregar_estudiante():
+    if current_user.is_authenticated:
+        return render_template('/administracion/adm/add_alumno.html',paralelos = paralelos, permisos = permisosList, periodoActivo = periodoActivo)     
+    return redirect(url_for('Index'))
+ 
+@app.route('/add_alum', methods=['POST'])
+def add_alum():
+    if current_user.is_authenticated:
+         if request.method == 'POST':
+            cedula = request.form["cedula"]
+            nombre = request.form["nombre"]
+            apellido = request.form["apellido"]
+            paralelo = request.form["paralelo"]
+            periodo = request.form["periodo"]
+            estado = request.form["estado"]
+            consultas.agregar_estudiante(cedula, nombre, apellido, paralelo, periodo, estado)
+            return redirect(url_for("adm_agregar_estudiante",paralelos = paralelos, permisos = permisosList, periodoActivo = periodoActivo))
+    return redirect(url_for('Index'))
 #editar alumno
 @app.route('/edit/<id>', methods = ['POST', 'GET'])
 def edit(id):
-    estudiante = consultas.encontrar_alumno(id)
-    periodoActivo = consultas.get_periodo_activo()
-    periodo = periodoActivo['anio']
-    return render_template('/administracion/adm/edit_alumno.html',periodo = periodo, permisos = permisosList, estudiante = estudiante, periodosList = periodosList, paralelos = paralelos)
-#update
-@app.route('/update/<id>', methods=['POST'])
-def update_contact(id):
+    if current_user.is_authenticated:
+        estudiante = consultas.encontrar_alumno(id)
+        return render_template('/administracion/adm/edit_alumno.html',periodoActivo = periodoActivo, permisos = permisosList, estudiante = estudiante, paralelos = paralelos)
+    return redirect(url_for('index'))  
+
+@app.route('/update_estudiante/<id>', methods=['POST'])
+def update_estudiante(id):
+ if current_user.is_authenticated:
     if request.method == 'POST':
         cedula = request.form["cedula"]
         nombre = request.form["nombre"]
@@ -90,11 +114,17 @@ def update_contact(id):
         paralelo = request.form["paralelo"]
         periodo = request.form["periodo"]
         estado = request.form["estado"]
-        
         consultas.editar_alumno(id, cedula, nombre, apellido, paralelo, periodo, estado)
-
         return redirect(url_for("ver_estudiantes",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
-''' Control de rutas para interfaz de administracion'''
+    return redirect(url_for('index'))  
+
+#ruta para eliminar estudiante
+@app.route('/delete/<id>', methods = ['POST','GET'])
+def delete_student(id):
+ if current_user.is_authenticated:
+    consultas.eliminar_estudiante_por_id(id)  
+    return redirect(url_for("ver_estudiantes",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
+ return redirect(url_for('index'))  
 #Ruta para 
 @app.route('/agregar_adm', methods=["get","post"])
 @login_required
