@@ -165,9 +165,16 @@ def get_paralelos():
                     'estado': i["estado"]
                }
                paralelosList.append(paralelo)
-          return paralelosList
-     except:
-          return False
+          if paralelosList:
+               return paralelosList
+          else: 
+               paralelo = {
+                    'nombre_paralelo': "Todos los paralelos"
+               }
+               paralelosList.append(paralelo)
+               return paralelosList
+     except IOError:
+          return IOError
 #encontrar alumno
 def encontrar_alumno(palumno_id):
      alumno = model.alumnos.objects.get(alumno_id=palumno_id)
@@ -209,8 +216,11 @@ def get_lista_alumnos(pUsuario_id, pPeriodo):
           usuario = model.usuarios.objects.get(usuario_id = pUsuario_id)
           maestro = usuario["usuario_id"]
           #saber paralelo donde el maestro esta a cargo
-          paralelo = model.paralelos.objects.get(maestro_id = maestro)
-          paraleloId = paralelo["paralelo_id"]
+          if is_admin(maestro):
+               print("Es admin")
+          else:
+               paralelo = model.paralelos.objects.get(maestro_id = maestro)
+               paraleloId = paralelo["paralelo_id"]
           #saber el periodo que se esta buscando
           periodo = model.periodos.objects.get(anio = pPeriodo)
           periodoId = periodo["periodo_id"]
@@ -233,8 +243,8 @@ def get_lista_alumnos(pUsuario_id, pPeriodo):
                estudiantesList.append(estudiante)
 
           return estudiantesList
-     except:
-          return False
+     except IOError:
+          return IOError
 
 #Devuelve todos los archivos de la coleccion periodo   
 def get_periodos():
@@ -287,8 +297,11 @@ def get_lista_actividades(pUsuario_id, pPeriodo):
           usuario = model.usuarios.objects.get(usuario_id = pUsuario_id)
           maestro = usuario["usuario_id"]
           #saber paralelo donde el maestro esta a cargo
-          paralelo = model.paralelos.objects.get(maestro_id = maestro)
-          paraleloId = paralelo["paralelo_id"]
+          if is_admin(maestro):
+               print("Es admin")
+          else:
+               paralelo = model.paralelos.objects.get(maestro_id = maestro)
+               paraleloId = paralelo["paralelo_id"]
           #saber el periodo que se esta buscando
           periodo = model.periodos.objects.get(anio = pPeriodo)
           periodoId = periodo["periodo_id"]
@@ -323,8 +336,8 @@ def get_lista_actividades(pUsuario_id, pPeriodo):
                actividadesList.append(act)
 
           return actividadesList
-     except:
-          return False
+     except IOError:
+          return IOError
 
 #encontrar 
 def encontrar_actividad(pactividad_id):

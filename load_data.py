@@ -137,7 +137,7 @@ rol1 = modelo.roles(
 rol2 = modelo.roles(
      rol_id = "2",
      nombre_rol = "docente",
-     permiso_id = ["6","7","8"]
+     permiso_id = ["4","6","7","8"]
 )
 
 rol3 = modelo.roles(

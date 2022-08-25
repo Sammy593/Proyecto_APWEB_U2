@@ -73,6 +73,7 @@ def lista_estudiantes():
         if request.method == 'POST':
             id = current_user.get_id()
             periodo_anio = request.form["periodo"]
+            print(periodo_anio)
             lista_estudiantes = consultas.get_lista_alumnos(id, periodo_anio)
             return render_template('/administracion/adm/ver_est.html',paralelos = paralelos, permisos = permisosList, periodosList = periodosList, lista_estudiantes= lista_estudiantes)
     return redirect(url_for('index'))    
