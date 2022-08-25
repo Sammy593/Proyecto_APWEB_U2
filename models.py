@@ -97,6 +97,7 @@ try:
           actividad_id = db.StringField(required=True, unique=True)
           materia_id = db.StringField(required=True)
           periodo_id = db.StringField(required=True)
+          paralelo_id = db.StringField(required=True)
           nombre_actividad = db.StringField(required=True)
           fecha = db.DateTimeField(default=datetime.utcnow)
           estado = db.BooleanField(required=True)

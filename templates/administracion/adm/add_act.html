@@ -1,0 +1,44 @@
+{% extends "administracion.html" %}
+{% block add_act %}
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card card-body">
+        <form action="/add_act" method="POST">
+          <div class="form-group">
+            <label for="cedula">Materia</label>
+            <select class="form-select col-sm-10" name="materia" id="materia" width="100%">
+               {% for materia in materias %}
+               <option value="{{materia['materia_id']}}">{{materia['nombre_materia']}}</option>
+               {%endfor%}
+          </select>
+          </div>
+          <div class="form-group">
+               <label for="nombre">Nombre de actividad</label>
+            <input type="text" name="nombre_actividad" class="form-control">
+          </div>
+          <div class="form-group">
+               <label for="paralelo">Paralelo</label>   
+               {% for paralelo in paralelos %}     
+                  {% if paralelo['maestro_id'] == current_user.get_id() %}
+                  <input type="text" name="paralelo" id="paralelo" value="{{paralelo['nombre_paralelo']}}" class="form-control" readonly>
+                  {%endif%}
+               {%endfor%}
+          </div>
+          <div class="form-group">
+               <label for="estado">Estado de actividad</label>
+               <select class="form-select col-sm-5" name="estado" id="estado">
+                    <option value="Activo">Activo</option>
+               </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Agregar e iniciar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

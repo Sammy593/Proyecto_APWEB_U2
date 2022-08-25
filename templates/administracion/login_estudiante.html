@@ -2,6 +2,8 @@
 {% block login %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/login_estudiantes.css')}}">
 <section class="login_estudiante">
+	{% if iniciar == True and current_user.is_authenticated%}
+	<h1>{{iniciar['nombre_actividad']}}</h1>
     <div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -9,7 +11,6 @@
 				<p class="mb-5 text-center"></p>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col-sm-6 col-sm-6 col-lg-4">
 				<div id="student" class="img-box">
@@ -49,6 +50,17 @@
 			</div>
 		</div>
 	</div>
+	{%else%}
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="text-center">
+		<img src="https://i.pinimg.com/originals/0a/8e/a5/0a8ea5d0e5f0c152f5d1419732a49713.gif" alt="Esperando">
+	</div>
+	{%endif%}
 </section>
 
 <script>

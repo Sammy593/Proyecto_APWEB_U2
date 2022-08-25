@@ -60,7 +60,7 @@ def administracion():
 def ver_adm(): 
     return render_template('/administracion/adm/ver_adm.html', permisos = permisosList)
 
-"""Administrar alumnos"""
+""" ------------------------------ Administrar alumnos ------------------------------"""
 @app.route("/ver_estudiantes")
 def ver_estudiantes(): 
      if current_user.is_authenticated:
@@ -125,31 +125,95 @@ def delete_student(id):
     consultas.eliminar_estudiante_por_id(id)  
     return redirect(url_for("ver_estudiantes",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
  return redirect(url_for('index'))  
+
 #Ruta para 
 @app.route('/agregar_adm', methods=["get","post"])
 @login_required
 def agregar_adm():
 	if not current_user.is_admin():
 		abort(404)
-     
 
-@app.route("/logout")
-def logout():
-    logout_user()
-    permisosList.clear()
-    return redirect(url_for('index'))
+""" ------------------------------ Administrar actividades ------------------------------"""
+@app.route("/ver_actividades")
+def ver_actividades(): 
+     if current_user.is_authenticated:
+         return render_template('/administracion/adm/ver_act.html', permisos = permisosList, periodosList = periodosList, paralelos = paralelos)
+     return redirect(url_for('index'))
+ 
+@app.route("/lista_actividades", methods=["GET", "POST"])
+def lista_actividades():
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            id = current_user.get_id()
+            periodo_anio = request.form["periodo"]
+            lista_actividades= consultas.get_lista_actividades(id, periodo_anio)
+            return render_template('/administracion/adm/ver_act.html', paralelos = paralelos, permisos = permisosList, periodosList = periodosList, lista_actividades= lista_actividades)
+    return redirect(url_for('index'))    
+#editar actividad
+@app.route('/edit_act/<id>', methods = ['POST', 'GET'])
+def edit_act(id):
+    if current_user.is_authenticated:
+        actividad = consultas.encontrar_actividad(id)
+        materias = consultas.get_materias()
+        return render_template('/administracion/adm/edit_act.html',materias = materias, periodoActivo = periodoActivo, permisos = permisosList, actividad = actividad, paralelos = paralelos)
+    return redirect(url_for('index'))  
 
+@app.route('/update_actividad/<id>', methods=['POST'])
+def update_actividad(id):
+ if current_user.is_authenticated:
+    if request.method == 'POST':
+        actividad_id = id
+        materiaid = request.form["materia"]
+        nombre_actividad = request.form["nombre_actividad"]
+        paralelo = request.form["paralelo"]
+        estado = request.form["estado"]
+        consultas.editar_actividad(actividad_id,materiaid,nombre_actividad,paralelo,estado)
+        return redirect(url_for("ver_actividades",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
+    return redirect(url_for('index'))  
 
+#ruta para eliminar actividad
+@app.route('/delete_act/<id>', methods = ['POST','GET'])
+def delete_act(id):
+ if current_user.is_authenticated:
+    consultas.eliminar_actividad_por_id(id)  
+    return redirect(url_for("ver_actividades",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
+ return redirect(url_for('index'))  
 
-#Este es el login de estudiante
-@app.route('/login_estudiante')
-def login_estudiante(): 
-    return render_template('/administracion/login_estudiante.html')
+materias = consultas.get_materias()
+#agregar actividad
+@app.route('/adm_agregar_act')
+def adm_agregar_act():
+    if current_user.is_authenticated:      
+        return render_template('/administracion/adm/add_act.html',materias=materias,paralelos = paralelos, permisos = permisosList, periodoActivo = periodoActivo)     
+    return redirect(url_for('Index'))
+
+@app.route('/add_act', methods=['POST'])
+def add_act():
+    if current_user.is_authenticated:
+         if request.method == 'POST':
+            materia = request.form["materia"]
+            nombre_actividad = request.form["nombre_actividad"]
+            paralelo =  request.form["paralelo"]
+            estado =  request.form["estado"]
+            consultas.agregar_actividad(materia, nombre_actividad, paralelo, estado)
+            return redirect(url_for("adm_agregar_act",materias=materias,paralelos = paralelos, permisos = permisosList, periodoActivo = periodoActivo))
+    return redirect(url_for('Index'))
+
 
 '''
  ####################################################
         Rutas para el juego
 '''
+#Este es el login de estudiante
+@app.route('/login_estudiante')
+def login_estudiante(): 
+    actividad = consultas.actividad_enCurso()
+    if actividad != False:
+        iniciar = True
+    else:
+        iniciar = False
+    return render_template('/administracion/login_estudiante.html', iniciar = iniciar)
+
 #Este es la interfaz prinicipal del juego 
 @app.route('/principal')
 def principal():
@@ -199,6 +263,16 @@ def winner():
 '''
  ##############################################################################
 '''
+
+"""Cerrar sesion"""
+@app.route("/logout")
+def logout():
+    logout_user()
+    permisosList.clear()
+    return redirect(url_for('index'))
+
+
+
 #Llamando al cargador de User
 @login_manager.user_loader
 def load_user(user_id):

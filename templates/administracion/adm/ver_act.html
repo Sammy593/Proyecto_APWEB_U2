@@ -1,7 +1,7 @@
 {% extends "administracion.html" %} 
-{% block ver_est %}
+{% block ver_act %}
 <div>
-     <form action="/lista_estudiantes" method="post">
+     <form action="/lista_actividades" method="post">
        <div class="form-group row">
           <label class="col-sm-4 col-form-label col-form-label-lg" for="anio_periodos">Seleccione el periodo lectivo</label>
           <select class="form-select col-sm-5" name="periodo" id="periodo">
@@ -21,28 +21,28 @@
           <thead>
             <tr>
               <td>ID</td>
-              <td>Cedula</td>
-              <td>Nombre</td>
-              <td>Apellido</td>
-              <td>Paralelo</td>
+              <td>Materia</td>
+              <td>Actividad</td>
+              <td>Fecha</td>
+              <td>Estado</td>
             </tr>
           </thead>
           <tbody>
-            {% for estudiante in lista_estudiantes %}
+            {% for actividad in lista_actividades %}
             <tr>
-              <td>{{estudiante.alumno_id}}</td>
-              <td>{{estudiante.cedula}}</td>
-              <td>{{estudiante.nombre}}</td>
-              <td>{{estudiante.apellido}}</td>
-              {%for paralelo in paralelos%}
-                {%if paralelo['paralelo_id'] == estudiante['paralelo_id']%}
-                  <td>{{paralelo.nombre_paralelo}}</td>
-                {%endif%}
-              {% endfor %}
-              {% if current_user.is_admin() or '3' in permisos %}
+              <td>{{actividad.actividad_id}}</td>
+              <td>{{actividad.materia_nombre}}</td>
+              <td>{{actividad.nombre_actividad}}</td>
+              <td>{{actividad.fecha}}</td>
+              {% if actividad['estado'] == True %}
+              <td>En curso</td>
+              {%else%}
+              <td>Terminada</td>
+              {%endif%}
+              {% if current_user.is_admin() or '7' in permisos %}
               <td>
-                <a href="/edit/{{estudiante.alumno_id}}" class="btn btn-secondary">Editar</a>
-                <a href="/delete_student/{{estudiante.alumno_id}}" class="btn btn-danger btn-delete">Eliminar</a>
+                <a href="/edit_act/{{actividad.actividad_id}}" class="btn btn-secondary">Editar</a>
+                <a href="/delete_act/{{actividad.actividad_id}}" class="btn btn-danger btn-delete">Eliminar</a>
               </td>
             </tr>
              {%endif%}

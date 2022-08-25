@@ -16,13 +16,26 @@ usuario2 = modelo.usuarios(
      nombre = "Jhostyn",
      apellido = "Gavilanez",
      email = "jjgavilanez@espe.edu.ec",
-     usuario = "docente",
-     clave = "docente",
+     usuario = "docente1",
+     clave = "docente1",
      rol_id = ["docente"],
      estado = True
 )
+
+usuario3 = modelo.usuarios(
+     usuario_id = "3",
+     nombre = "Daniel",
+     apellido = "Perez",
+     email = "daniel@espe.edu.ec",
+     usuario = "docente2",
+     clave = "docente2",
+     rol_id = ["encargado"],
+     estado = True
+)
+
 usuario1.save()
 usuario2.save()
+usuario3.save()
 
 permiso1 = modelo.permisos(
      permiso_id = "1",
@@ -88,6 +101,14 @@ permiso16 = modelo.permisos(
      permiso_id = "16",
      nombre = "quitar reportes"
 )
+permiso17 = modelo.permisos(
+     permiso_id = "17",
+     nombre = "ver/agregar periodos"
+)
+permiso18 = modelo.permisos(
+     permiso_id = "18",
+     nombre = "ver/agregar/quitar reglas"
+)
 
 permiso1.save()
 permiso2.save()
@@ -105,20 +126,29 @@ permiso13.save()
 permiso14.save()
 permiso15.save()
 permiso16.save()
+permiso17.save()
+permiso18.save()
 
 rol1 = modelo.roles(
      rol_id = "1",
      nombre_rol = "administrador",
-     permiso_id = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"]
+     permiso_id = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"]
 )
 rol2 = modelo.roles(
      rol_id = "2",
      nombre_rol = "docente",
-     permiso_id = ["4","6","7","8","9"]
+     permiso_id = ["6","7","8"]
+)
+
+rol3 = modelo.roles(
+     rol_id = "3",
+     nombre_rol = "encargado",
+     permiso_id = ["8","9"]
 )
 
 rol1.save()
 rol2.save()
+rol3.save()
 
 #Agregar reglas
 regla1 = modelo.reglas(
@@ -139,17 +169,24 @@ regla2.save()
 periodo1 = modelo.periodos(
      periodo_id = "1",
      regla_id = "1",
-     anio = "2021",
+     anio = "2020",
      estado = False
 )
 periodo2 = modelo.periodos(
      periodo_id = "2",
      regla_id = "2",
+     anio = "2021",
+     estado = False
+)
+periodo3 = modelo.periodos(
+     periodo_id = "3",
+     regla_id = "3",
      anio = "2022",
      estado = True
 )
 periodo1.save()
 periodo2.save()
+periodo3.save()
 
 #agregar alumnos
 alumno1 = modelo.alumnos(
@@ -168,7 +205,7 @@ alumno2 = modelo.alumnos(
      nombre = "Armando",
      apellido = "Paredes",
      paralelo_id = "1",
-     periodo_id = "2",
+     periodo_id = "1",
      estado = True
 )
 alumno3 = modelo.alumnos(
@@ -176,8 +213,8 @@ alumno3 = modelo.alumnos(
      cedula = "7893391123",
      nombre = "Alan",
      apellido = "Brito",
-     paralelo_id = "2",
-     periodo_id = "2",
+     paralelo_id = "1",
+     periodo_id = "3",
      estado = True
 )
 alumno4 = modelo.alumnos(
@@ -189,30 +226,37 @@ alumno4 = modelo.alumnos(
      periodo_id = "2",
      estado = True
 )
+alumno5 = modelo.alumnos(
+     alumno_id = "5",
+     cedula = "1723654123",
+     nombre = "Marcos",
+     apellido = "Castro",
+     paralelo_id = "2",
+     periodo_id = "3",
+     estado = True
+)
+
 alumno1.save()
 alumno2.save()
 alumno3.save()
 alumno4.save()
+alumno5.save()
 
 #agregar paralelos
 paralelo1 = modelo.paralelos(
      paralelo_id = "1",
-     maestro_id = "1",
+     maestro_id = "2",
      nombre_paralelo = "A",
      estado = True
 )
 paralelo2 = modelo.paralelos(
      paralelo_id = "2",
-     maestro_id = "2",
+     maestro_id = "3",
      nombre_paralelo = "B",
      estado = True
 )
 paralelo1.save()
 paralelo2.save()
-#agregar actividades
-
-#Agregar notas
-
 
 #Agregar materias
 materia1 = modelo.materias(
@@ -228,11 +272,12 @@ materia2 = modelo.materias(
 
 materia1.save()
 materia2.save()
-
+#agregar actividades
 actividad1 = modelo.actividades(
      actividad_id = "1",
      materia_id = "1",
-     periodo_id = "2",
+     periodo_id = "3",
+     paralelo_id = "1",
      nombre_actividad = "Juego de valores 1",
      estado = False
 )
@@ -240,7 +285,8 @@ actividad1 = modelo.actividades(
 actividad2 = modelo.actividades(
      actividad_id = "2",
      materia_id = "2",
-     periodo_id = "2",
+     periodo_id = "3",
+     paralelo_id = "2",
      nombre_actividad = "Juego de valores 2",
      estado = True
 )

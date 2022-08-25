@@ -79,7 +79,7 @@
       {% if current_user.is_authenticated%}
       <ul class="app-menu">
         <li>
-          <a class="app-menu__item" href="estados.html"
+          <a class="app-menu__item" href="#"
             ><i class="app-menu__icon fa fa-dashboard"></i
             ><span class="app-menu__label">Informacion</span></a
           >
@@ -254,14 +254,14 @@
           <ul class="treeview-menu">
             {% if '7' in permisos%}
             <li>
-              <a class="treeview-item active" href="blank-page.html"
+              <a class="treeview-item active" href="{{url_for('adm_agregar_act')}}"
                 ><i class="icon fa fa-circle-o"></i> Agregar actividad</a
               >
             </li>
             {% endif %} 
             {% if '8' in permisos%}
             <li>
-              <a class="treeview-item" href="page-login.html"
+              <a class="treeview-item" href="{{url_for('ver_actividades')}}"
                 ><i class="icon fa fa-circle-o"></i> Ver actividades</a
               >
             </li>
@@ -316,6 +316,13 @@
             {% endblock %}
             <!-- Agregar alumno -->
             {% block add_alum %}
+            {% endblock %}
+
+            <!--Ver actividades-->
+            {% block ver_act %}
+            {% endblock %}
+            <!--Agregar actividad-->
+            {% block add_act %}
             {% endblock %}
           </div>
         </div>

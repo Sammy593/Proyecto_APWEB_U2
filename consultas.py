@@ -34,6 +34,74 @@ def agregar_estudiante(pcedula, pnombre, papellido, pparalelo, pperiodo, pestado
      alumno.save()
      return True
 
+def nuevo_id_actividad():
+     lista = []
+     id_acts = model.actividades.objects()
+     for i in id_acts:
+          id = i['actividad_id']
+          lista.append(int(id))
+     return max(lista) + 1
+
+def desactivar_actividades():
+     for i in model.actividades.objects():
+          i['estado'] = False
+          i.save()
+def actividad_enCurso():
+     try:
+          actividad = []
+          for i in model.actividades.objects():
+               if i['estado'] == True:
+                    act = {
+                         'actividad_id': i["actividad_id"],
+                         'materia_id': i,
+                         'periodo_id': i["periodo_id"],
+                         'paralelo_id': i["paralelo_id"],
+                         'nombre_actividad': i["nombre_actividad"],
+                         'fecha': i["fecha"],
+                         'estado': i["estado"]
+                    }
+                    actividad.append(act)
+          
+          if actividad:
+               return True
+          else:
+               return False
+     except:
+          return False     
+def agregar_actividad(
+                     pmateria_id, 
+                     pnombre_actividad,
+                     pparalelo_name,
+                     pestado
+                     ):
+     try:
+          desactivar_actividades()
+          if pestado == "Activo":
+               pestado2 = True
+          else:
+               pestado2 = False
+          
+          actividadId = str(nuevo_id_actividad())
+          
+          periodo = get_periodo_activo()
+          periodoId = periodo['periodo_id']
+          
+          paralelo = model.paralelos.objects.get(nombre_paralelo = pparalelo_name)
+          paraleloId = paralelo['paralelo_id']
+          
+          actividad = model.actividades(
+               actividad_id= actividadId,
+               materia_id= pmateria_id,
+               periodo_id = periodoId,
+               paralelo_id = paraleloId,
+               nombre_actividad = pnombre_actividad,
+               estado = pestado2
+          )
+          
+          actividad.save()
+          
+     except IOError:
+       return IOError 
 """ ***************** Eliminar archivos *****************"""
 #Eliminar usuario por id
 def eliminar_usuario_por_id(id): 
@@ -51,6 +119,16 @@ def eliminar_estudiante_por_id(id):
           return True
      except:
           return False
+     
+def eliminar_actividad_por_id(id): 
+     try:
+          actividad = model.actividades.objects.get(actividad_id=id)
+          actividad.delete()
+          return True
+     except:
+          return False
+     
+""" *************************************************************"""    
 #lista de roles de usuario
 def get_roles_usuario(id):
      roles = []
@@ -167,7 +245,7 @@ def get_periodos():
                     'periodo_id': i["periodo_id"],
                     'regla_id': i["regla_id"],
                     'anio': i["anio"],
-                    'estado': i["estado"],
+                    'estado': i["estado"]
                }
                periodosList.append(periodo)
           return periodosList
@@ -187,3 +265,96 @@ def get_periodo_activo():
           return periodoActivo
      except:
           return False
+
+def get_materias():
+     try:
+          materiasList = []
+          for i in model.materias.objects():
+               periodo = {
+                    'materia_id': i["materia_id"],
+                    'nombre_materia': i["nombre_materia"],
+                    'estado': i["estado"]
+               }
+               materiasList.append(periodo)
+          return materiasList
+     except:
+          return False
+
+def get_lista_actividades(pUsuario_id, pPeriodo):
+     actividadesList = []
+     try:
+          #saber id de maestro que ha iniciado sesion
+          usuario = model.usuarios.objects.get(usuario_id = pUsuario_id)
+          maestro = usuario["usuario_id"]
+          #saber paralelo donde el maestro esta a cargo
+          paralelo = model.paralelos.objects.get(maestro_id = maestro)
+          paraleloId = paralelo["paralelo_id"]
+          #saber el periodo que se esta buscando
+          periodo = model.periodos.objects.get(anio = pPeriodo)
+          periodoId = periodo["periodo_id"]
+          #obtener alumnos segun el periodo y paralelo
+          if is_admin(maestro):
+               actividades = model.actividades.objects(periodo_id = periodoId)
+          else:
+               actividades = model.actividades.objects(paralelo_id = paraleloId, periodo_id = periodoId)
+          for actividad in actividades:
+               #obtener nombre de materia
+               materiaId = actividad["materia_id"]
+               materia = model.materias.objects.get(materia_id = materiaId)
+               materiaNombre = materia['nombre_materia']
+               #***
+               if actividad['estado'] == True:
+                    estado_materia = "En curso"
+               else: 
+                    estado_materia = "Terminada"
+               act = {
+                    'actividad_id': actividad["actividad_id"],
+                    'materia_id': materiaId,
+                    'periodo_id': actividad["periodo_id"],
+                    'paralelo_id': actividad["paralelo_id"],
+                    'nombre_actividad': actividad["nombre_actividad"],
+                    'fecha': actividad["fecha"],
+                    'estado': actividad["estado"],
+                    #Campo extra con el nombre de la materia segun su id
+                    'materia_nombre': materiaNombre,
+                    #campo extra segun actividad
+                    'estado_materia': estado_materia
+                    }
+               actividadesList.append(act)
+
+          return actividadesList
+     except:
+          return False
+
+#encontrar 
+def encontrar_actividad(pactividad_id):
+     actividad = model.actividades.objects.get(actividad_id=pactividad_id)
+     return actividad
+#Editar actividad
+def editar_actividad(pactividad_id, 
+                     pmateria_id, 
+                     pnombre_actividad,
+                     pparalelo_name,
+                     ppestado
+                     ):
+     actividad = encontrar_actividad(pactividad_id)
+     if ppestado == "Activo":
+       pestado = True
+     else:
+       pestado = False
+       
+     periodo = get_periodo_activo()
+     periodoId = periodo['periodo_id']
+     
+     paralelo = model.paralelos.objects.get(nombre_paralelo = pparalelo_name)
+     paraleloId = paralelo['paralelo_id']
+     
+     actividad.update(
+          actividad_id= pactividad_id,
+          materia_id= pmateria_id,
+          periodo_id = periodoId,
+          paralelo_id = paraleloId,
+          nombre_actividad = pnombre_actividad,
+          estado = pestado
+     )
+     return False
