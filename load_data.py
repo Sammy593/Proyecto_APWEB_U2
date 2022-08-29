@@ -29,7 +29,7 @@ usuario3 = modelo.usuarios(
      email = "daniel@espe.edu.ec",
      usuario = "docente2",
      clave = "docente2",
-     rol_id = ["encargado"],
+     rol_id = ["docente"],
      estado = True
 )
 
@@ -158,7 +158,7 @@ regla1 = modelo.reglas(
 )
 regla2 = modelo.reglas(
      regla_id = "2",
-     regla = "20" ,
+     regla = "20",
      estado = True
 )
 
@@ -180,7 +180,7 @@ periodo2 = modelo.periodos(
 )
 periodo3 = modelo.periodos(
      periodo_id = "3",
-     regla_id = "3",
+     regla_id = "2",
      anio = "2022",
      estado = True
 )
@@ -294,7 +294,7 @@ actividad2 = modelo.actividades(
 actividad1.save()
 actividad2.save()
 
-nota1 = modelo.notas(
+"""nota1 = modelo.notas(
      nota_id = "1",
      alumno_id = "3",
      actividad_id = "1",
@@ -302,10 +302,17 @@ nota1 = modelo.notas(
 )
 nota2 = modelo.notas(
      nota_id = "2",
-     alumno_id = "4",
-     actividad_id = "1",
+     alumno_id = "5",
+     actividad_id = "2",
+     valor_nota = 17.55
+)
+nota3 = modelo.notas(
+     nota_id = "3",
+     alumno_id = "5",
+     actividad_id = "2",
      valor_nota = 17.55
 )
 
 nota1.save()
 nota2.save()
+nota3.save()"""

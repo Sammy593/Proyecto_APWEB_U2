@@ -31,7 +31,7 @@
           </div>
 
             <!--Card 1 bien-->
-            <div class="deck" id="bien" onclick="window.location.href = '/winner'">
+            <div class="deck" id="bien1">
                 <div class="card clickcard">
                   <div class="front face">
                     <img src="https://thumbs.dreamstime.com/z/ni%C3%B1o-lindo-con-capa-roja-protegiendo-su-familia-padres-felices-y-hijo-ilustrando-el-vector-muchacho-que-protege-ilustrado-184062221.jpg" alt="">
@@ -73,7 +73,7 @@
           </div>
 
             <!--Card 2 bien-->
-            <div class="deck"  id="bien" onclick="window.location.href = '/winner'">
+            <div class="deck"  id="bien2">
                 <div class="card clickcard">
                   <div class="front face">
                     <img
@@ -97,27 +97,48 @@
 
 <script>
   let boton = document.querySelector("#mal")
+  let botonUno = document.querySelector("#malUno")
+  let botonDos = document.querySelector("#malDos")
+  let botonBien1 = document.querySelector('#bien1')
+  let botonBien2 = document.querySelector('#bien2')
+  errores = []
 
   boton.addEventListener("click", () => {
     let etiquetaAudio = document.createElement("audio")
     etiquetaAudio.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
     etiquetaAudio.play()
+    ids = boton.getAttribute("id")
+    errores.push(ids)
   })
-
-  let botonUno = document.querySelector("#malUno")
 
   botonUno.addEventListener("click", () => {
     let etiquetaAudioUno = document.createElement("audio")
     etiquetaAudioUno.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
     etiquetaAudioUno.play()
+    ids = boton.getAttribute("id")
+    errores.push(ids)
   })
-
-  let botonDos = document.querySelector("#malDos")
 
   botonDos.addEventListener("click", () => {
     let etiquetaAudioDos = document.createElement("audio")
     etiquetaAudioDos.setAttribute("src", "{{url_for('static', filename='audios/a_intentemos_denuevo.mp3')}}")
     etiquetaAudioDos.play()
+    ids = boton.getAttribute("id")
+    errores.push(ids)
+  })
+
+ 
+
+  botonBien1.addEventListener("click", () => {
+    numErrores = errores.length;
+    direccion = window.location.href = '/winner/{{id_estudiante}}/'+numErrores
+    botonBien1.setAttribute('onclick', direccion)
+  })
+
+  botonBien2.addEventListener("click", () => {
+    numErrores = errores.length;
+    direccion = window.location.href = '/winner/{{id_estudiante}}/'+numErrores
+    botonBien2.setAttribute('onclick', direccion)
   })
 </script>
 

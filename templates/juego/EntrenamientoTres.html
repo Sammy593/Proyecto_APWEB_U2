@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/estiloEntrenamiento/ThreeEntren.css')}}">
-<meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/gameTres" />
+<meta HTTP-EQUIV="Refresh" CONTENT="3; URL=/gameTres/{{id_estudiante}}" />
 <body onload="boton_aparecer()">
     <div class="nube_container">
         <img class="nube" id="nube1" src="{{url_for('static', filename='images/inicio/nube.png')}}" alt="">

@@ -2,7 +2,7 @@
 {% block login %}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/login_estudiantes.css')}}">
 <section class="login_estudiante">
-	{% if iniciar == True and current_user.is_authenticated%}
+	{% if iniciar == True and current_user.is_authenticated and current_user.is_admin() == False%}
 	<h1>{{iniciar['nombre_actividad']}}</h1>
     <div class="container">
 		<div class="row">
@@ -12,42 +12,14 @@
 			</div>
 		</div>
 		<div class="row">
+			{%for alumno in alumnos%}
 			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/6437821/pexels-photo-6437821.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
+				<span class="datos_estudiante">{{alumno.nombre}}</span><br><span class="datos_estudiante">{{alumno.apellido}}</span>
+				<div class="img-box">
+					<img id="student" data-*="{{alumno.alumno_id}}" src="https://images.pexels.com/photos/6437821/pexels-photo-6437821.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
 				</div>
 			</div>
-
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/5789949/pexels-photo-5789949.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/2326887/pexels-photo-2326887.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/5859732/pexels-photo-5859732.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/5692269/pexels-photo-5692269.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/4625789/pexels-photo-4625789.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
-			<div class="col-sm-6 col-sm-6 col-lg-4">
-				<div id="student" class="img-box">
-					<img src="https://images.pexels.com/photos/3661336/pexels-photo-3661336.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="">
-				</div>
-			</div>
+			{%endfor%}
 		</div>
 	</div>
 	{%else%}
@@ -64,13 +36,12 @@
 </section>
 
 <script>
-  var fotos = document.querySelectorAll('.img-box');
-  var estudiante = document.querySelector('#student');
+  var estudiante = document.querySelectorAll('#student');
 
-  for (var i = 0; i < fotos.length; i++) {
-
-	fotos[i].addEventListener('click', function() {
-		window.location.href = "/principal";
+  for (var i = 0; i < estudiante.length; i++) {
+	estudiante[i].addEventListener('click', e => {
+		idstudent = e.target.getAttribute("data-*")
+		window.location.href = "/principal/"+idstudent;
     });
 
   }

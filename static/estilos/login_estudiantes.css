@@ -82,3 +82,13 @@ p{
   	right: 10px;
   	bottom: 10px;
 }
+
+.datos_estudiante{
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-size: 18px;
+	display: flex;
+	position: absolute;
+	z-index: 1;
+	margin-top: 7%;
+	margin-left: 5%;
+}

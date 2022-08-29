@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block winner %}
 <!--Este es para regresar de forma automatica al principal -->
-<meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/principal" />
+<meta HTTP-EQUIV="Refresh" CONTENT="23; URL=/principal/{{id_estudiante}}'" />
 <head>  
   <link rel="stylesheet" href="{{url_for('static', filename='estilos/styles.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='estilos/fondo.css')}}">

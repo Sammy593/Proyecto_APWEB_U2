@@ -19,11 +19,20 @@
           </div>
           <div class="form-group">
                <label for="paralelo">Paralelo</label>   
+               <label for="paralelo">Paralelo</label>
+               {% if current_user.is_admin() %}
+               <select class="form-select col-sm-5" name="paralelo" id="paralelo">
+                    {% for paralelo in paralelos %}
+                    <option value="{{paralelo['nombre_paralelo']}}">{{paralelo['nombre_paralelo']}}</option>
+                    {%endfor%}
+               </select>
+               {%else%}
                {% for paralelo in paralelos %}     
                   {% if paralelo['maestro_id'] == current_user.get_id() %}
                   <input type="text" name="paralelo" id="paralelo" value="{{paralelo['nombre_paralelo']}}" class="form-control" readonly>
                   {%endif%}
                {%endfor%}
+               {%endif%}
           </div>
           <div class="form-group">
              <label for="apellido">Fecha de creacion</label>
@@ -31,10 +40,16 @@
           </div>
           <div class="form-group">
                <label for="estado">Estado de actividad</label>
+               {% if current_user.is_admin() %}
+                <select class="form-select col-sm-5" name="estado" id="estado">
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+               {%else%}
                <select class="form-select col-sm-5" name="estado" id="estado">
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                </select>
+               {%endif%}
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">

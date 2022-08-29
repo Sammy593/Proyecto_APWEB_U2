@@ -149,9 +149,18 @@ def lista_actividades():
             periodo_anio = request.form["periodo"]
             lista_actividades= consultas.get_lista_actividades(id, periodo_anio)
             return render_template('/administracion/adm/ver_act.html', paralelos = paralelos, permisos = permisosList, periodosList = periodosList, lista_actividades= lista_actividades)
-    return redirect(url_for('index'))    
+    return redirect(url_for('index'))
+
+#ver notas
+@app.route("/ver_notas/<id_act>")
+def ver_notas(id_act):
+    if current_user.is_authenticated:   
+        notas = consultas.get_lista_notas(id_act)
+        return render_template('/administracion/adm/ver_notas.html', permisos = permisosList, notas = notas, paralelos = paralelos)
+    return redirect(url_for('index'))   
+    
 #editar actividad
-@app.route('/edit_act/<id>', methods = ['POST', 'GET'])
+@app.route('/edit_act/<id>')
 def edit_act(id):
     if current_user.is_authenticated:
         actividad = consultas.encontrar_actividad(id)
@@ -180,6 +189,7 @@ def delete_act(id):
     return redirect(url_for("ver_actividades",paralelos = paralelos, permisos = permisosList, periodosList = periodosList))
  return redirect(url_for('index'))  
 
+
 materias = consultas.get_materias()
 #agregar actividad
 @app.route('/adm_agregar_act')
@@ -205,61 +215,70 @@ def add_act():
  ####################################################
         Rutas para el juego
 '''
+estudianteId = ""
 #Este es el login de estudiante
 @app.route('/login_estudiante')
 def login_estudiante(): 
     actividad = consultas.actividad_enCurso()
+    print(actividad)
+    id = current_user.get_id()
+    try:
+        alumnos = consultas.get_lista_alumnos(id, periodoActivo)
+    except:
+        alumnos = False
+    print(alumnos)
     if actividad != False:
         iniciar = True
     else:
         iniciar = False
-    return render_template('/administracion/login_estudiante.html', iniciar = iniciar)
+    return render_template('/administracion/login_estudiante.html', iniciar = iniciar, alumnos = alumnos)
 
 #Este es la interfaz prinicipal del juego 
-@app.route('/principal')
-def principal():
-    return render_template('/juego/principal.html')
+@app.route('/principal/<id_estudiante>')
+def principal(id_estudiante):
+    return render_template('/juego/principal.html', id_estudiante = id_estudiante)
 
 #Este es el entrenamiento Uno del Juego 
-@app.route('/EntrenamientoUno')
-def EntrenamientoUno():
-    return render_template('/juego/EntrenamientoUno.html') 
+@app.route('/EntrenamientoUno/<id_estudiante>')
+def EntrenamientoUno(id_estudiante):
+    return render_template('/juego/EntrenamientoUno.html', id_estudiante = id_estudiante) 
 
 #este es el juego de la primera pregunta 
-@app.route('/game')
-def game():
-    return render_template('/juego/game.html')
+@app.route('/game/<id_estudiante>')
+def game(id_estudiante):
+    return render_template('/juego/game.html', id_estudiante = id_estudiante)
 
 #Este es el entrenamiento Dos del Juego 
-@app.route('/EntrenamientoDos')
-def EntrenamientoDos():
-    return render_template('/juego/EntrenamientoDos.html') 
+@app.route('/EntrenamientoDos/<id_estudiante>')
+def EntrenamientoDos(id_estudiante):
+    return render_template('/juego/EntrenamientoDos.html', id_estudiante = id_estudiante) 
 
 #este es el juego de la segunda pregunta 
-@app.route('/gameDos')
-def gameDos():
-    return render_template('/juego/gameDos.html')
+@app.route('/gameDos/<id_estudiante>')
+def gameDos(id_estudiante):
+    return render_template('/juego/gameDos.html', id_estudiante = id_estudiante)
 
 #Este es el Entrenamiento tres del juego 
-@app.route('/EntrenamientoTres')
-def EntrenamientoTres():
-    return render_template('/juego/EntrenamientoTres.html') 
+@app.route('/EntrenamientoTres/<id_estudiante>')
+def EntrenamientoTres(id_estudiante):
+    return render_template('/juego/EntrenamientoTres.html', id_estudiante = id_estudiante) 
 
 #este es el juego de la Tercera pregunta 
-@app.route('/gameTres')
-def gameTres():
-    return render_template('/juego/gameTres.html')
+@app.route('/gameTres/<id_estudiante>')
+def gameTres(id_estudiante):
+    return render_template('/juego/gameTres.html', id_estudiante = id_estudiante)
 
 #este es el juego del test 
-@app.route('/gameTest')
-def gameTest():
-    return render_template('/juego/gameTest.html')
+@app.route('/gameTest/<id_estudiante>')
+def gameTest(id_estudiante):
+    return render_template('/juego/gameTest.html', id_estudiante = id_estudiante)
 
 #esta es la celebracion por pregunta 
-@app.route('/winner')
+@app.route('/winner/<id_estudiante>/<errores>')
 #contenedor para llamar a principal.html
-def winner():
-    return render_template('/juego/winner.html')
+def winner(id_estudiante,errores):
+    consultas.agregar_nota(id_estudiante, errores)
+    return render_template('/juego/winner.html', id_estudiante = id_estudiante)
 
 '''
  ##############################################################################

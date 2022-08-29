@@ -1,26 +1,57 @@
+from operator import mod
 import models as model
-#validacion de usuarios
+
+#devuelve los datos del periodo activo
+def get_periodo_activo():
+     try:
+          periodo = model.periodos.objects.get(estado = True)
+          periodoActivo = {
+               'periodo_id':periodo['periodo_id'],
+               'regla_id': periodo['regla_id'],
+               'anio': periodo['anio'],
+               'estado': periodo['estado']
+          }
+          return periodoActivo
+     except:
+          return False
+
+""" **************** Validacion de usuarios **************** """
+
+#Encontramos a usuario por nombre de usuario y contraseña
+
 def encontrar_usuario(puser, ppasswd):
      try:
           usuario = model.usuarios.objects.get(usuario=puser, clave=ppasswd)
-          print(usuario["usuario_id"])
           return usuario
      except:
           return False
-""" ***************** Agregar archivos *****************"""
+""" ****************   Agregar archivos ***********************"""
+def nuevo_id_estudiante():
+     lista = []
+     id_est = model.alumnos.objects()
+     for i in id_est:
+          id = i['alumno_id']
+          lista.append(int(id))
+     return max(lista) + 1
+
+# ****************** Agregar estudiante *******************
 def agregar_estudiante(pcedula, pnombre, papellido, pparalelo, pperiodo, pestado):
+     #Convierte dato de tipo texto a booleano para guardar
      if pestado == "Activo":
        pestado2 = True
      else:
        pestado2 = False
      
+     #busca el id del paralelo segun nombre
      paralelo = model.paralelos.objects.get(nombre_paralelo = pparalelo)
      paraleloId = paralelo['paralelo_id']
-       
+     
+     #busca id de año segun numero
      periodo = model.periodos.objects.get(anio = pperiodo)
      periodoId = periodo['periodo_id']
      
-     alumnoId = str(len(model.alumnos.objects()) + 1)
+     #genera un id de estudiante
+     alumnoId = str(nuevo_id_estudiante())
      
      alumno = model.alumnos(
      alumno_id = alumnoId,
@@ -31,9 +62,10 @@ def agregar_estudiante(pcedula, pnombre, papellido, pparalelo, pperiodo, pestado
      periodo_id = periodoId,
      estado = pestado2
      )
+     #guardar archivo
      alumno.save()
      return True
-
+# ****************** Funciones para agregar actividad *******************
 def nuevo_id_actividad():
      lista = []
      id_acts = model.actividades.objects()
@@ -48,24 +80,8 @@ def desactivar_actividades():
           i.save()
 def actividad_enCurso():
      try:
-          actividad = []
-          for i in model.actividades.objects():
-               if i['estado'] == True:
-                    act = {
-                         'actividad_id': i["actividad_id"],
-                         'materia_id': i,
-                         'periodo_id': i["periodo_id"],
-                         'paralelo_id': i["paralelo_id"],
-                         'nombre_actividad': i["nombre_actividad"],
-                         'fecha': i["fecha"],
-                         'estado': i["estado"]
-                    }
-                    actividad.append(act)
-          
-          if actividad:
-               return True
-          else:
-               return False
+          actividad = model.actividades.objects.get(estado = True)
+          return actividad
      except:
           return False     
 def agregar_actividad(
@@ -75,7 +91,7 @@ def agregar_actividad(
                      pestado
                      ):
      try:
-          desactivar_actividades()
+          desactivar_actividades() #Antes de agregar una actividad, primero desactivamos la actividad anterior.
           if pestado == "Activo":
                pestado2 = True
           else:
@@ -102,6 +118,65 @@ def agregar_actividad(
           
      except IOError:
        return IOError 
+
+#Agregar una calificacion (coleccion notas)
+def nuevo_id_nota():
+     lista = []
+     try:
+          id_n = model.notas.objects()
+          for i in id_n:
+               id = i['nota_id']
+               lista.append(int(id))
+          return max(lista) + 1
+     except:
+          return 1
+
+def buscar_regla_por_id(pid):
+     regla = model.reglas.objects.get(regla_id = pid)
+     return regla
+
+def agregar_nota(pEstudiante_id, errores): 
+     try:
+          notaId = str(nuevo_id_nota())
+
+          actividad = actividad_enCurso()
+          actividadId = actividad['actividad_id']
+
+          periodo = get_periodo_activo()
+          id_regla_periodoACtivo = periodo['regla_id']
+          
+          regla = buscar_regla_por_id(id_regla_periodoACtivo)
+          valor_regla = int(regla['regla'])
+          
+          #generar nota
+          if int(errores) < 2:
+               resta = (valor_regla * 0)/100
+               calificacion = valor_regla - resta
+          elif int(errores) >= 2 or int(errores) <= 4  :
+               resta = (valor_regla * 25)/100
+               calificacion = valor_regla - resta
+          elif int(errores) >= 5 or int(errores) <= 6:
+               resta = (valor_regla * 55)/100
+               calificacion = valor_regla - resta
+          elif int(errores) >= 7 or int(errores) <= 8:
+               resta = (valor_regla * 75)/100
+               calificacion = valor_regla - resta
+          else:
+               resta = (valor_regla * 100)/100
+               calificacion = valor_regla - resta
+               
+          nota = model.notas(
+          nota_id = notaId,
+          alumno_id = pEstudiante_id,
+          actividad_id = actividadId,
+          valor_nota = calificacion
+          )
+          nota.save()
+          
+     except IOError:
+       return IOError
+
+""" *************************************************************"""  
 """ ***************** Eliminar archivos *****************"""
 #Eliminar usuario por id
 def eliminar_usuario_por_id(id): 
@@ -129,6 +204,7 @@ def eliminar_actividad_por_id(id):
           return False
      
 """ *************************************************************"""    
+""" ********************** Devolver datos ***********************""" 
 #lista de roles de usuario
 def get_roles_usuario(id):
      roles = []
@@ -261,21 +337,7 @@ def get_periodos():
           return periodosList
      except:
           return False
-
-#devuelve los datos del periodo activo
-def get_periodo_activo():
-     try:
-          periodo = model.periodos.objects.get(estado = True)
-          periodoActivo = {
-               'periodo_id':periodo['periodo_id'],
-               'regla_id': periodo['regla_id'],
-               'anio': periodo['anio'],
-               'estado': periodo['estado']
-          }
-          return periodoActivo
-     except:
-          return False
-
+     
 def get_materias():
      try:
           materiasList = []
@@ -371,3 +433,25 @@ def editar_actividad(pactividad_id,
           estado = pestado
      )
      return False
+
+""" Funciones para mostrar notas """
+def get_lista_notas(idActividad):
+     notasList = []
+     notas = model.notas.objects(actividad_id = idActividad)
+     
+     for nota in notas:
+          notaAlumnoId = nota['alumno_id']    
+          alumno = model.alumnos.objects.get(alumno_id = notaAlumnoId)
+          nombreAlumno = alumno['nombre']
+          apellidoAlumno = alumno['apellido'] 
+          nt = {
+               'nota_id': nota['nota_id'],
+               'alumno_id': nota['alumno_id'],
+               'alumno_nombre': nombreAlumno,
+               'alumno_apellido': apellidoAlumno,
+               'actividad_id': nota['actividad_id'],
+               'valor_nota': nota['valor_nota']
+               }
+          notasList.append(nt)
+     
+     return notasList
